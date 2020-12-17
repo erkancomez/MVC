@@ -1,5 +1,7 @@
 ﻿using Erkan.ToDo.Web.CustomFilters;
 using Erkan.ToDo.Web.Models;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,10 @@ namespace Erkan.ToDo.Web.Controllers
             ViewBag.Isim = "Erkan";
             TempData["Isim"] = "Erkan";
             ViewData["Isim"] = "Erkan";
+
+            //SetCookie();
+            SetSession();
+            ViewBag.Cookie = GetSession();
 
             return View();
         }
@@ -38,7 +44,51 @@ namespace Erkan.ToDo.Web.Controllers
             }
             ModelState.AddModelError(nameof(UserSignUpViewModel.Name), "Name Area");
             ModelState.AddModelError("", "eroor for model");
-            return View("SignUp",model);
+            return View("SignUp", model);
+        }
+        public void SetCookie()
+        {
+            HttpContext.Response.Cookies.Append("person", "erkan", new Microsoft.AspNetCore.Http.CookieOptions()
+            {
+                Expires = DateTime.Now.AddDays(20),
+                HttpOnly = true,
+                SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict,
+                Secure = false
+            });
+
+        }
+        public string GetCookie()
+        {
+            return HttpContext.Request.Cookies["person"];
+        }
+        public void SetSession()
+        {
+            HttpContext.Session.SetString("person", "Erkan");
+        }
+        public string GetSession()
+        {
+            return HttpContext.Session.GetString("person");
+        }
+        public IActionResult PageError(int code)
+        {
+            @ViewBag.Code = code;
+            if (code == 404)
+            {
+                ViewBag.Message = "Sayfa Bulunamadı";
+            }
+            return View();
+        }
+        public IActionResult Error()
+        {
+            var exceptionHandlerPathFeature =
+                HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            ViewBag.Path = exceptionHandlerPathFeature.Path;
+            ViewBag.Message = exceptionHandlerPathFeature.Error.Message;
+            return View();
+        }
+        public IActionResult Hata()
+        {
+            throw new Exception("Hata oluştu");
         }
     }
 }

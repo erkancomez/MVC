@@ -20,6 +20,7 @@ namespace Erkan.ToDo.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession();
             services.AddControllersWithViews();
         }
 
@@ -30,6 +31,15 @@ namespace Erkan.ToDo.Web
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+
+
+            //app.UseStatusCodePagesWithReExecute("/Home/PageError", "?code={0}");
+            //app.UseStatusCodePages();
+            app.UseSession();
             app.UseStaticFiles();
             app.UseCustomStaticFile();
             app.UseRouting();
