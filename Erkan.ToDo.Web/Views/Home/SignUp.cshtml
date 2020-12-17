@@ -1,0 +1,30 @@
+﻿@model UserSignUpViewModel 
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SignUp</title>
+    <link href="~/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <form class="w-50 mx-auto mt-5 shadow" method="post" asp-action="SignUp2">
+        <input type="text" class="form-control" name="Name" value="" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <input type="text" class="form-control" name="SurName" value="" />
+        <button type"submit">Send</button>
+        <div asp-validation-summary="ModelOnly" class="text-info">
+
+        </div>
+        <hr/>
+        <div asp-validation-summary="All" class="text-success">
+
+        </div>
+
+    </form>
+</body>
+</html>
