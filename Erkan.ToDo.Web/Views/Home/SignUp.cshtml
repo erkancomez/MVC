@@ -12,19 +12,25 @@
     <link href="~/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
+    <div class="alert-danger">
+        @ViewBag.Message
+    </div>
+    
     <form class="w-50 mx-auto mt-5 shadow" method="post" asp-action="SignUp2">
-        <input type="text" class="form-control" name="Name" value="" />
+        <input type="text" asp-for="Name" class="form-control" name="Name" value="" />
         <span asp-validation-for="Name" class="text-danger"></span>
-        <input type="text" class="form-control" name="SurName" value="" />
         <button type"submit">Send</button>
         <div asp-validation-summary="ModelOnly" class="text-info">
 
         </div>
-        <hr/>
+        <hr />
         <div asp-validation-summary="All" class="text-success">
 
         </div>
 
     </form>
+    <script src="~/jquery/jquery.js"></script>
+    <script src="~/jqueryValidate/jquery.validate.min.js"></script>
+    <script src="~/jqueryUnob/jquery.validate.unobtrusive.min.js"></script>
 </body>
 </html>

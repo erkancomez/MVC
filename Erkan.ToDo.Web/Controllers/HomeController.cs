@@ -1,4 +1,5 @@
-﻿using Erkan.ToDo.Web.Models;
+﻿using Erkan.ToDo.Web.CustomFilters;
+using Erkan.ToDo.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace Erkan.ToDo.Web.Controllers
         {
             return View();
         }
+        [NamecantErkan]
         [HttpPost]
         public IActionResult SignUp2(UserSignUpViewModel model)
         {
