@@ -82,6 +82,10 @@ namespace Erkan.ToDo.Web.Controllers
         {
             var exceptionHandlerPathFeature =
                 HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+
+            CustomLogger.NLogLogger nLogLogger = new CustomLogger.NLogLogger();
+            nLogLogger.LogWithNLog($"hatanın oluştuğu yer : {exceptionHandlerPathFeature.Path} \n hata mesajı : {exceptionHandlerPathFeature.Error.Message}\n stack trace : {exceptionHandlerPathFeature.Error.StackTrace}");
+
             ViewBag.Path = exceptionHandlerPathFeature.Path;
             ViewBag.Message = exceptionHandlerPathFeature.Error.Message;
             return View();
