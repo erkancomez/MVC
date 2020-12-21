@@ -1,43 +1,8 @@
-﻿@model List<CustomerViewModel>
-
-
+﻿
 @{
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*Html.Partial("_Categories")*@
-<partial name="_Categories" />
 
+<h1>Index</h1>
 
-<p class="text-danger lead">
-    Index action controlettiği view
-</p>
-
-@await Component.InvokeAsync("Products"); 
-
-<div class="alert alert-light lead">
-    @ViewBag.Cookie
-</div>
-@*<a asp-area="" asp-action="Index" asp-controller="Home" asp-route-id="1">Link </a>
-<CategoryList></CategoryList>
-<erkan enter-the-data="Deneme Data"></erkan>
-<table>
-    <tr>
-        <th>ViewBag.Isim</th>
-        <td>@ViewBag.Isim</td>
-    </tr>
-    <tr>
-        <th>ViewData["Isim"]</th>
-        <td>@ViewData["Isim"]</td>
-    </tr>
-    <tr>
-        <th>TempData["Isim"]</th>
-        <td>@TempData["Isim"]</td>
-    </tr>
-</table>
-<h4>
-    Modelden gelen data
-</h4>
-@foreach (var item in Model)
-{
-    <p>@item.Name</p>
-}*@

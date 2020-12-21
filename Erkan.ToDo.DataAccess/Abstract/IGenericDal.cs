@@ -11,6 +11,7 @@ namespace Erkan.ToDo.DataAccess.Abstract
         void Delete(Table table);
         void Update(Table table);
         Table GetId(int Id);
-        List<Table> GetAllWorkings();
+        List<Table> GetAll();
+        
     }
 }

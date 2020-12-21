@@ -18,7 +18,7 @@ namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories
             context.SaveChanges();
         }
 
-        public List<Table> GetAllWorkings()
+        public List<Table> GetAll()
         {
             using var context = new ToDoContext();
             return context.Set<Table>().ToList();
