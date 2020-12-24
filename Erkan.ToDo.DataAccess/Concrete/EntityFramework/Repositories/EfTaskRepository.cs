@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework
+namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories
 {
     public class EfTaskRepository : EfGenericRepository<Task>, ITaskDal
     {

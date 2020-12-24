@@ -1,3 +1,9 @@
+using Erkan.ToDo.Business.Abstract;
+using Erkan.ToDo.Business.Concrete;
+using Erkan.ToDo.DataAccess.Abstract;
+using Erkan.ToDo.DataAccess.Concrete.EntityFramework.Contexts;
+using Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories;
+using Erkan.ToDo.Entities.Concrete;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +17,17 @@ namespace Erkan.ToDo.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ITaskService, TaskManager>();
+            services.AddScoped<IImportanceService, ImportanceManager>();
+            services.AddScoped<IReportService, ReportManager>();
+
+            services.AddScoped<ITaskDal, EfTaskRepository>();
+            services.AddScoped<IReportDal, EfReportRepository>();
+            services.AddScoped<IImportanceDal, EfImportanceRepository>();
+
+            services.AddDbContext<ToDoContext>();
+            services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<ToDoContext>();
+
             services.AddControllersWithViews();
         }
 
@@ -27,7 +44,14 @@ namespace Erkan.ToDo.Web
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area}/{controller=Home}/{action=Index}/{id?}"
+                    );
+                endpoints.MapControllerRoute(
+                    name:"default",
+                    pattern:"{controller=Home}/{action=Index}/{id?}"
+                    );
             });
         }
     }

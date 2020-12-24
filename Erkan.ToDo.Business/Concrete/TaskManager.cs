@@ -1,4 +1,5 @@
 ﻿using Erkan.ToDo.Business.Abstract;
+using Erkan.ToDo.DataAccess.Abstract;
 using Erkan.ToDo.DataAccess.Concrete.EntityFramework;
 using Erkan.ToDo.Entities.Concrete;
 using System.Collections.Generic;
@@ -7,35 +8,36 @@ namespace Erkan.ToDo.Business.Concrete
 {
     public class TaskManager:ITaskService
     {
-        private readonly EfTaskRepository efWorkingRepository;
+        private readonly ITaskDal _taskDal;
 
-        public TaskManager()
+        public TaskManager(ITaskDal taskService)
         {
-            efWorkingRepository = new EfTaskRepository();
+            _taskDal = taskService;
+            
         }
         public void Delete(Task table)
         {
-            efWorkingRepository.Delete(table);
+            _taskDal.Delete(table);
         }
 
         public List<Task> GetAll()
         {
-            return efWorkingRepository.GetAll();
+            return _taskDal.GetAll();
         }
 
         public Task GetId(int Id)
         {
-            return efWorkingRepository.GetId(Id);
+            return _taskDal.GetId(Id);
         }
 
         public void Save(Task table)
         {
-            efWorkingRepository.Save(table);
+            _taskDal.Save(table);
         }
 
         public void Update(Task table)
         {
-            efWorkingRepository.Update(table);
+            _taskDal.Update(table);
         }
     }
 }

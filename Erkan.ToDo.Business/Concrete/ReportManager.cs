@@ -1,4 +1,5 @@
 ﻿using Erkan.ToDo.Business.Abstract;
+using Erkan.ToDo.DataAccess.Abstract;
 using Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories;
 using Erkan.ToDo.Entities.Concrete;
 using System;
@@ -9,34 +10,34 @@ namespace Erkan.ToDo.Business.Concrete
 {
     public class ReportManager : IReportService
     {
-        private readonly EfReportRepository reportRepository;
-        public ReportManager()
+        private readonly IReportDal _reportDal;
+        public ReportManager(IReportDal reportDal)
         {
-            reportRepository = new EfReportRepository();
+            _reportDal = reportDal;
         }
         public void Delete(Report table)
         {
-            reportRepository.Delete(table);
+            _reportDal.Delete(table);
         }
 
         public List<Report> GetAll()
         {
-            return reportRepository.GetAll();
+            return _reportDal.GetAll();
         }
 
         public Report GetId(int Id)
         {
-            return reportRepository.GetId(Id);
+            return _reportDal.GetId(Id);
         }
 
         public void Save(Report table)
         {
-            reportRepository.Save(table);
+            _reportDal.Save(table);
         }
 
         public void Update(Report table)
         {
-            reportRepository.Update(table);
+            _reportDal.Update(table);
         }
     }
 }
