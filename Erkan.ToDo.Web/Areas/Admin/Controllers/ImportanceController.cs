@@ -21,17 +21,61 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
+            TempData["Active"] = "importance";
             List<Importance> importances = _importanceService.GetAll();
 
             List<ImportanceListViewModel> model = new List<ImportanceListViewModel>();
 
             foreach (var item in importances)
             {
-                ImportanceListViewModel importanceModel = new ImportanceListViewModel();
-                importanceModel.Id = item.Id;
-                importanceModel.Definition = item.Definition;
+                ImportanceListViewModel importanceModel = new ImportanceListViewModel
+                {
+                    Id = item.Id,
+                    Definition = item.Definition
+                };
 
                 model.Add(importanceModel);
+            }
+            return View(model);
+        }
+        public IActionResult AddImportance()
+        {
+            TempData["Active"] = "importance";
+            return View(new ImportanceAddViewModel());
+        }
+        [HttpPost]
+        public IActionResult AddImportance(ImportanceAddViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _importanceService.Save(new Importance() {
+                Definition = model.Definition
+                });
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+        public IActionResult UpdateImportance(int id)
+        {
+            TempData["Active"] = "importance";
+            var importance = _importanceService.GetId(id);
+            ImportanceUpdateViewModel model = new ImportanceUpdateViewModel
+            { 
+                Id = importance.Id, Definition = importance.Definition 
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult UpdateImportance(ImportanceUpdateViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _importanceService.Update(new Importance
+                {
+                    Id = model.Id,
+                    Definition = model.Definition
+                });
+                return RedirectToAction("Index");
             }
             return View(model);
         }
