@@ -7,5 +7,6 @@ namespace Erkan.ToDo.Business.Abstract
 {
     public interface ITaskService:IGenericService<Task>
     {
+        List<Task> GetByImportanceIncomplete();
     }
 }

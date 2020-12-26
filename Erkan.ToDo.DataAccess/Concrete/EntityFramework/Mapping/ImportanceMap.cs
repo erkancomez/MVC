@@ -11,7 +11,7 @@ namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Mapping
     {
         public void Configure(EntityTypeBuilder<Importance> builder)
         {
-            builder.Property(I => I.Definition).HasMaxLength(100);
+            builder.Property(I => I.Definition).HasMaxLength(200);
         }
     }
 }

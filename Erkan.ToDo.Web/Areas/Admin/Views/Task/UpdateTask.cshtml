@@ -1,10 +1,11 @@
-﻿@model TaskAddViewModel
+﻿@model TaskUpdateViewModel
 @{
-    ViewData["Title"] = "AddTask";
+    ViewData["Title"] = "UpdateTask";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<form asp-action="AddTask" method="post" class="w-75 mx-auto p-3 ">
+<form asp-action="UpdateTask" method="post" class="w-75 mx-auto p-3 ">
+    <input type="hidden" asp-for="Id" />
     <div class="form-group">
         <label>Ad: </label>
         <span asp-validation-for="Name" class="text-danger"></span>

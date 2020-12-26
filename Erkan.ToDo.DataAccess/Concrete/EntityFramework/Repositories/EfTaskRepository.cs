@@ -2,6 +2,7 @@
 using Erkan.ToDo.DataAccess.Concrete.EntityFramework.Contexts;
 using Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories;
 using Erkan.ToDo.Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,11 @@ namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories
 {
     public class EfTaskRepository : EfGenericRepository<Task>, ITaskDal
     {
+        public List<Task> GetByImportanceIncomplete()
+        {
+            using var context = new ToDoContext();
+            // return context.Tasks.Include(I => I.Importance).Where(I=>I.Statement).OrderByDescending(I => I.CreatedDate).ToList();
+            return context.Tasks.Include(I => I.Importance).OrderByDescending(I => I.CreatedDate).ToList();
+        }
     }
 }

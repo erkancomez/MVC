@@ -1,10 +1,21 @@
-﻿
+﻿@model AppUserSignInModel
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_StandardLayout.cshtml";
 }
 
-<h1>Index</h1>
+<form action="SignIn" method="post" class="mt-5 w-50 mx-auto p-4 shadow">
+    <div class="form-group">
+        <label asp-for="UserName"></label>
+        <span asp-validation-for="UserName" class="text-danger"></span>
+        <input asp-for="UserName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <span asp-validation-for="Password" class="text-danger"></span>
+        <input asp-for="Password" class="form-control" />
+    </div>
+    <a asp-action="SignUp" class="btn btn-warning btn-sm">Kayıt Ol</a>
+    <input type="submit" class="btn btn-info btn-sm" value="Giriş Yap" />
 
-<a asp-area="Admin" asp-controller="Home" asp-action="Index"> Admin sayfasına git</a>
-<a asp-area="Member">Member sayfasına git</a>
+</form>

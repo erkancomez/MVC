@@ -56,7 +56,7 @@ namespace Erkan.ToDo.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Definition = table.Column<string>(maxLength: 100, nullable: true)
+                    Definition = table.Column<string>(maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {

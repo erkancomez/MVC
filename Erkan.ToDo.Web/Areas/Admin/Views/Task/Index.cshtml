@@ -4,31 +4,32 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-@if (Model.Count !=0)
+@if (Model.Count != 0)
 {
-<a asp-action="AddTask" class="btn btn-info btn-sm">Bir Görev Oluştur</a>
-<table>
-    <tr>
-        <th>Ad</th>
-        <th>Açıklama</th>
-        <th>Durum</th>
-        <th>Aciliyet Id</th>
-        <th>
-            <a href="#">Düzenle</a>
-            <a href="#">Sil</a>
-        </th>
-    </tr>
-    @foreach (var item in Model)
-    {
-<tr>
-    <td>@item.Name</td>
-    <td>@item.Explanation</td>
-    <td>@item.Statement</td>
-    <td>@item.ImportanceId</td>
-</tr>
+    <a asp-action="AddTask" class="btn btn-info btn-sm my-2">Bir Görev Oluştur</a>
+    <table class="table table-sm table-hover">
+        <tr>
+            <th>Ad</th>
+            <th>Açıklama</th>
+            <th>Oluşturulma Tarihi</th>
+            <th>Aciliyet</th>
+            <th>İşlem</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Explanation</td>
+                <td>@item.CreatedDate.ToString("D")</td>
+                <td>@item.Importance.Definition</td>
+                <td>
+                    <a asp-action="UpdateTask" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Düzenle</a>
+                    <a href="#" data-toggle="modal" data-target="#deleteScreen" data-erkan="@item.Id">Sil</a>
+                </td>
+            </tr>
 
-    }
-</table>
+        }
+    </table>
 
 }
 else
@@ -36,8 +37,56 @@ else
     <div class="p-3 text-center mt-3">
         <p class="lead">
             Herhangi bir görev bulunamadı.
-        </p>        
+        </p>
         <a asp-action="AddTask" class="btn btn-info btn-sm">Bir Görev Oluştur</a>
     </div>
 }
 
+<!-- Modal -->
+<div class="modal fade" id="deleteScreen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Uyarı</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Silmek istediğinizden emin misiniz?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hayır, Vazgeç</button>
+                <button id="btnRemove" type="button" class="btn btn-primary">Evet, Sil</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section JavaScript{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#deleteScreen").on("show.bs.modal", function (event) {
+                let tetikleyenElement = $(event.relatedTarget);
+                let id = tetikleyenElement.data("erkan");
+
+                $("#btnRemove").click(function () {
+                    $.ajax({
+                        type: "Get",
+                        url: "./Task/DeleteTask",
+                        data: { id: id },
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8;",
+                        success: function () {
+                            //alert("işlem tamam");
+                            window.location.reload();
+                        },
+                        error: function (error) {
+                            alert(error.statusText);
+                        }
+                    })
+                });
+            })
+        });
+    </script>
+
+}
