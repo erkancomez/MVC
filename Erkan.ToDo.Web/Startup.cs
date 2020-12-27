@@ -22,10 +22,12 @@ namespace Erkan.ToDo.Web
             services.AddScoped<ITaskService, TaskManager>();
             services.AddScoped<IImportanceService, ImportanceManager>();
             services.AddScoped<IReportService, ReportManager>();
+            services.AddScoped<IAppUserService, AppUserManager>();
 
             services.AddScoped<ITaskDal, EfTaskRepository>();
             services.AddScoped<IReportDal, EfReportRepository>();
             services.AddScoped<IImportanceDal, EfImportanceRepository>();
+            services.AddScoped<IAppUserDal, EfAppUserRepository>();
 
             services.AddDbContext<ToDoContext>();
             services.AddIdentity<AppUser, AppRole>(opt =>
@@ -60,6 +62,8 @@ namespace Erkan.ToDo.Web
             }
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             IdentityInitializer.SeedData(userManager,roleManager).Wait();
             app.UseStaticFiles();
 

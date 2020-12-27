@@ -6,5 +6,8 @@ namespace Erkan.ToDo.DataAccess.Abstract
     public interface ITaskDal:IGenericDal<Task>
     {
         List<Task> GetByImportanceIncomplete();
+        List<Task> GetAllTable();
+        Task GetImportanceById(int id);
+
     }
 }

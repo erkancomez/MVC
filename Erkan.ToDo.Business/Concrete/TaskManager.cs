@@ -25,6 +25,11 @@ namespace Erkan.ToDo.Business.Concrete
             return _taskDal.GetAll();
         }
 
+        public List<Task> GetAllTable()
+        {
+            return _taskDal.GetAllTable();
+        }
+
         public List<Task> GetByImportanceIncomplete()
         {
             return _taskDal.GetByImportanceIncomplete();
@@ -33,6 +38,11 @@ namespace Erkan.ToDo.Business.Concrete
         public Task GetId(int Id)
         {
             return _taskDal.GetId(Id);
+        }
+
+        public Task GetImportanceById(int id)
+        {
+            return _taskDal.GetImportanceById(id);
         }
 
         public void Save(Task table)

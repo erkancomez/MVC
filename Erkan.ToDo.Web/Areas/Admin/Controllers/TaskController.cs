@@ -1,6 +1,7 @@
 ﻿using Erkan.ToDo.Business.Abstract;
 using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.Areas.Admin.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -9,6 +10,7 @@ using System.Linq;
 
 namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class TaskController : Controller
     {

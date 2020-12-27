@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Erkan.ToDo.Entities.Abstract;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Erkan.ToDo.Entities.Concrete
 {
-    public class AppUser : IdentityUser<int>
+    public class AppUser : IdentityUser<int>,ITable
     {
         public string Name { get; set; }
         public string SurName { get; set; }

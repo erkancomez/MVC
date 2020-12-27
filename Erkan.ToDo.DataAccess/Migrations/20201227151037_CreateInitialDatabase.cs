@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Erkan.ToDo.DataAccess.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class CreateInitialDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -43,7 +43,8 @@ namespace Erkan.ToDo.DataAccess.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: true),
-                    SurName = table.Column<string>(maxLength: 50, nullable: true)
+                    SurName = table.Column<string>(maxLength: 50, nullable: true),
+                    Picture = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -176,8 +177,8 @@ namespace Erkan.ToDo.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 200, nullable: true),
-                    Explanation = table.Column<string>(nullable: true),
-                    Statement = table.Column<string>(type: "ntext", nullable: false),
+                    Explanation = table.Column<string>(type: "ntext", nullable: true),
+                    Statement = table.Column<bool>(nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     ImportanceId = table.Column<int>(nullable: false),
                     AppUserId = table.Column<int>(nullable: true)

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Erkan.ToDo.DataAccess.Migrations
 {
     [DbContext(typeof(ToDoContext))]
-    [Migration("20201226181920_AddColumnPictureinAppUser")]
-    partial class AddColumnPictureinAppUser
+    [Migration("20201227151037_CreateInitialDatabase")]
+    partial class CreateInitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -187,7 +187,7 @@ namespace Erkan.ToDo.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Explanation")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("ntext");
 
                     b.Property<int>("ImportanceId")
                         .HasColumnType("int");
@@ -196,9 +196,8 @@ namespace Erkan.ToDo.DataAccess.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
-                    b.Property<string>("Statement")
-                        .IsRequired()
-                        .HasColumnType("ntext");
+                    b.Property<bool>("Statement")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

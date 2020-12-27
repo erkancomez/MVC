@@ -185,7 +185,7 @@ namespace Erkan.ToDo.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Explanation")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("ntext");
 
                     b.Property<int>("ImportanceId")
                         .HasColumnType("int");
@@ -194,9 +194,8 @@ namespace Erkan.ToDo.DataAccess.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
-                    b.Property<string>("Statement")
-                        .IsRequired()
-                        .HasColumnType("ntext");
+                    b.Property<bool>("Statement")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
