@@ -17,6 +17,12 @@ namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories
             return context.Tasks.Include(I => I.Importance).Include(I => I.Reports).Include(I => I.AppUser).Where(I => !I.Statement).OrderByDescending(I => I.CreatedDate).ToList();
         }
 
+        public List<Task> GetByAppUserId(int appUserId)
+        {
+            using var context = new ToDoContext();
+            return context.Tasks.Where(I => I.AppUserId == appUserId).ToList();
+        }
+
         public List<Task> GetByImportanceIncomplete()
         {
             using var context = new ToDoContext();

@@ -30,6 +30,11 @@ namespace Erkan.ToDo.Business.Concrete
             return _taskDal.GetAllTable();
         }
 
+        public List<Task> GetByAppUserId(int appUserId)
+        {
+            return _taskDal.GetByAppUserId(appUserId);
+        }
+
         public List<Task> GetByImportanceIncomplete()
         {
             return _taskDal.GetByImportanceIncomplete();

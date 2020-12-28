@@ -2,6 +2,7 @@
 using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.Areas.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,13 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
     {
         private readonly IAppUserService _appUserService;
         private readonly ITaskService _taskService;
+        private readonly UserManager<AppUser> _userManager;
 
-        public WorkOrderController(IAppUserService appUserService, ITaskService taskService)
+        public WorkOrderController(IAppUserService appUserService, ITaskService taskService, UserManager<AppUser> userManager)
         {
             _appUserService = appUserService;
             _taskService = taskService;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -86,6 +89,41 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
                 CreatedDate = task.CreatedDate
             };
             return View(taskModel);
+        }
+        [HttpPost]
+        public IActionResult AssignStaff(StaffTaskViewModel model)
+        {
+            var updateTask = _taskService.GetId(model.TaskId);
+            updateTask.AppUserId = model.StaffId;
+
+            _taskService.Update(updateTask);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult TaskStaff(StaffTaskViewModel model)
+        {
+            TempData["Active"] = "workorder";
+            var user = _userManager.Users.FirstOrDefault(I => I.Id == model.StaffId);
+            var task = _taskService.GetImportanceById(model.TaskId);
+
+            AppUserListViewModel userModel = new AppUserListViewModel();
+            userModel.Id = user.Id;
+            userModel.Name = user.Name;
+            userModel.Picture = user.Picture;
+            userModel.SurName = user.SurName;
+            userModel.Email = userModel.Email;
+
+            TaskListViewModel taskModel = new TaskListViewModel();
+            taskModel.Id = task.Id;
+            taskModel.Explanation = task.Explanation;
+            taskModel.Importance = task.Importance;
+            taskModel.Name = task.Name;
+
+            StaffTaskListViewModel staffTaskModel = new StaffTaskListViewModel();
+            staffTaskModel.AppUser = userModel;
+            staffTaskModel.Task = taskModel;
+
+            return View(staffTaskModel);
         }
     }
 }
