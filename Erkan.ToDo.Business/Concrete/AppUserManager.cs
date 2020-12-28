@@ -21,9 +21,9 @@ namespace Erkan.ToDo.Business.Concrete
             return _userDal.GetNonAdmin();
         }
 
-        public List<AppUser> GetNonAdmin(string searchingWord, int activePaging)
+        public List<AppUser> GetNonAdmin(out int totalPage, string searchingWord, int activePaging)
         {
-            return _userDal.GetNonAdmin(searchingWord, activePaging);
+            return _userDal.GetNonAdmin(out totalPage, searchingWord, activePaging);
         }
     }
 }

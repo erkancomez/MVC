@@ -35,21 +35,23 @@ namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories
 
             }).ToList();
         }
-        public List<AppUser> GetNonAdmin(string searchingWord, int activePaging = 1)
+
+        public List<AppUser> GetNonAdmin(out int totalPage, string searchingWord, int activePaging = 1)
         {
+
+
             using var context = new ToDoContext();
+
             var result = context.Users.Join(context.UserRoles, user => user.Id, userRole => userRole.UserId, (resultUser, resultUserRole) => new
             {
                 user = resultUser,
                 userRole = resultUserRole
-
             }).Join(context.Roles, twoTableResult => twoTableResult.userRole.RoleId, role => role.Id, (resultTable, resultRole) => new
             {
-                //user = resultTable.user,
                 resultTable.user,
                 userRoles = resultTable.userRole,
                 roles = resultRole
-            }).Where(I => I.roles.Name == "Member").Select(I => new AppUser
+            }).Where(I => I.roles.Name == "Member").Select(I => new AppUser()
             {
                 Id = I.user.Id,
                 Name = I.user.Name,
@@ -60,14 +62,21 @@ namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories
 
             });
 
+            totalPage = (int)Math.Ceiling((double)result.Count() / 3);
+
             if (!string.IsNullOrWhiteSpace(searchingWord))
             {
-                result.Where(I => I.Name.ToLower().Contains(searchingWord.ToLower()) || I.SurName.ToLower().Contains(searchingWord.ToLower()));
+                result = result.Where(I => I.Name.ToLower().Contains(searchingWord.ToLower()) || I.SurName.ToLower().Contains(searchingWord.ToLower()));
+                totalPage = (int)Math.Ceiling((double)result.Count() / 3);
+
             }
+
+
 
             result = result.Skip((activePaging - 1) * 3).Take(3);
 
             return result.ToList();
+
         }
     }
 }

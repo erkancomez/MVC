@@ -8,6 +8,6 @@ namespace Erkan.ToDo.Business.Abstract
     public interface IAppUserService
     {
         List<AppUser> GetNonAdmin();
-        List<AppUser> GetNonAdmin(string searchingWord, int activePaging);
+        List<AppUser> GetNonAdmin(out int totalPage, string searchingWord, int activePaging = 1);
     }
 }

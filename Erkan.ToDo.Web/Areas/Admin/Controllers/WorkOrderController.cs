@@ -54,13 +54,13 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
             TempData["Active"] = "workorder";
 
             ViewBag.ActivePage = page;
-            ViewBag.TotalPage = (int)Math.Ceiling((double)_appUserService.GetNonAdmin().Count / 3);
+
+            ViewBag.Search = s;
 
             var task = _taskService.GetImportanceById(id);
+            var staffs = _appUserService.GetNonAdmin(out int totalPage, s, page);
 
-
-
-            var staffs = _appUserService.GetNonAdmin(s, page);
+            ViewBag.TotalPage = totalPage;
 
             List<AppUserListViewModel> appUserListModel = new List<AppUserListViewModel>();
             foreach (var item in staffs)

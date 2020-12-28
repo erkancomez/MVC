@@ -8,6 +8,6 @@ namespace Erkan.ToDo.DataAccess.Abstract
     public interface IAppUserDal
     {
         List<AppUser> GetNonAdmin();
-        List<AppUser> GetNonAdmin(string searchingWord, int activePaging = 1);
+        List<AppUser> GetNonAdmin(out int totalPage, string searchingWord, int activePaging = 1);
     }
 }
