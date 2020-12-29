@@ -7,7 +7,7 @@
    //string active2 = TempData["Active"]?.ToString();
 }
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 
 <head>
 
@@ -17,6 +17,9 @@
     <meta name="author" content="">
 
     <title>Simple Sidebar - Start Bootstrap Template</title>
+
+
+    <link href="~/lib/fontAwasome/css/all.min.css" rel="stylesheet" />
 
     <!-- Bootstrap core CSS -->
     <link href="~/lib/bootswatch/bootstrap.min.css" rel="stylesheet" />
@@ -32,23 +35,25 @@
     <div class="d-flex" id="wrapper">
 
         <!-- Sidebar -->
-        <div class=" border-right" id="sidebar-wrapper">
+        <div class="border border-right " id="sidebar-wrapper">
             <div class="sidebar-heading">Admin Layout </div>
             <div class="list-group list-group-flush">
-                <a asp-action="Index" asp-controller="Task" class="list-group-item list-group-item-action @(active=="task"?"active":"")">Görev İşlemleri</a>
-                <a asp-action="Index" asp-controller="Importance" class="list-group-item list-group-item-action @(active=="importance"?"active":"")">Aciliyet işlemleri</a>
-                <a asp-action="Index" asp-controller="workOrder" class="list-group-item list-group-item-action  @(active=="workorder"?"active":"")">İş Emirleri</a>
-                <a href="#" class="list-group-item list-group-item-action ">Events</a>
-                <a href="#" class="list-group-item list-group-item-action ">Profile</a>
-                <a href="#" class="list-group-item list-group-item-action ">Status</a>
+                <a asp-action="Index" asp-controller="Task" class="list-group-item list-group-item-action @(active=="task"?"active":"")"><i class="fas fa-tasks mr-2"></i> Görev İşlemleri</a>
+                <a asp-action="Index" asp-controller="Importance" class="list-group-item list-group-item-action @(active=="importance"?"active":"")"><i class="fas fa-exclamation-circle mr-2"></i>Aciliyet işlemleri</a>
+                <a asp-action="Index" asp-controller="workOrder" class="list-group-item list-group-item-action  @(active=="workorder"?"active":"")"><i class="fas fa-business-time mr-2"></i>İş Emirleri</a>
+                <a href="#" class="list-group-item list-group-item-action "><i class="fas fa-chart-pie mr-2"></i>Grafikler</a>
+                <a href="#" class="list-group-item list-group-item-action "><i class="fas fa-chart-bar mr-2"></i>İstatistikler</a>
+                <a asp-action="Index" asp-controller="Importance" class="list-group-item list-group-item-action @(active=="xxxx"?"active":"")"><i class="fas fa-bell mr-2"></i>Bildirimler</a>
+                <a asp-action="Index" asp-controller="workOrder" class="list-group-item list-group-item-action  @(active=="xxxx"?"active":"")"><i class="fas fa-user mr-2"></i>Profil</a>
+                <a href="#" class="list-group-item list-group-item-action "><i class="fas fa-sign-out-alt mr-2"></i>Çıkış</a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
         <!-- Page Content -->
         <div id="page-content-wrapper">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+            <nav class="navbar navbar-expand-lg border border-bottom">
+                <button class="btn btn-outline-primary btn-sm" id="menu-toggle"><i class="fas fa-exchange-alt mr-2"></i>Menü</button>
 
                 @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -88,11 +93,13 @@
     <!-- Bootstrap core JavaScript -->
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/fontAwasome/js/all.min.js"></script>
 
-    @RenderSection("JavaScript",false)
+    @RenderSection("JavaScript", false)
 
     <!-- Menu Toggle Script -->
-    <script>$("#menu-toggle").click(function (e) {
+    <script>
+    $("#menu-toggle").click(function (e) {
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });</script>
