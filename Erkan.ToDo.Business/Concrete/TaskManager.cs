@@ -40,6 +40,11 @@ namespace Erkan.ToDo.Business.Concrete
             return _taskDal.GetByImportanceIncomplete();
         }
 
+        public Task GetByTaskId(int id)
+        {
+            return _taskDal.GetByTaskId(id);
+        }
+
         public Task GetId(int Id)
         {
             return _taskDal.GetId(Id);

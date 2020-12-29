@@ -52,6 +52,23 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
             }
             return View(models);
         }
+
+        public IActionResult Detail(int id)
+        {
+            TempData["Active"] = "workorder";
+            var task = _taskService.GetByTaskId(id);
+            TaskListAllViewModel model = new TaskListAllViewModel
+            {
+                Reports = task.Reports,
+                Name = task.Name,
+                Explanation = task.Explanation,
+                AppUser = task.AppUser
+            };
+
+            return View(model);
+
+        }
+
         public IActionResult AssignStaff(int id, string s, int page = 1)
         {
             TempData["Active"] = "workorder";
@@ -106,22 +123,28 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
             var user = _userManager.Users.FirstOrDefault(I => I.Id == model.StaffId);
             var task = _taskService.GetImportanceById(model.TaskId);
 
-            AppUserListViewModel userModel = new AppUserListViewModel();
-            userModel.Id = user.Id;
-            userModel.Name = user.Name;
-            userModel.Picture = user.Picture;
-            userModel.SurName = user.SurName;
+            AppUserListViewModel userModel = new AppUserListViewModel
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Picture = user.Picture,
+                SurName = user.SurName
+            };
             userModel.Email = userModel.Email;
 
-            TaskListViewModel taskModel = new TaskListViewModel();
-            taskModel.Id = task.Id;
-            taskModel.Explanation = task.Explanation;
-            taskModel.Importance = task.Importance;
-            taskModel.Name = task.Name;
+            TaskListViewModel taskModel = new TaskListViewModel
+            {
+                Id = task.Id,
+                Explanation = task.Explanation,
+                Importance = task.Importance,
+                Name = task.Name
+            };
 
-            StaffTaskListViewModel staffTaskModel = new StaffTaskListViewModel();
-            staffTaskModel.AppUser = userModel;
-            staffTaskModel.Task = taskModel;
+            StaffTaskListViewModel staffTaskModel = new StaffTaskListViewModel
+            {
+                AppUser = userModel,
+                Task = taskModel
+            };
 
             return View(staffTaskModel);
         }

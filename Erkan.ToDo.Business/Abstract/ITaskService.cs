@@ -11,5 +11,6 @@ namespace Erkan.ToDo.Business.Abstract
         List<Task> GetAllTable();
         Task GetImportanceById(int id);
         List<Task> GetByAppUserId(int appUserId);
+        Task GetByTaskId(int id);
     }
 }

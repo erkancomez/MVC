@@ -1,9 +1,7 @@
 ﻿using Erkan.ToDo.DataAccess.Abstract;
 using Erkan.ToDo.DataAccess.Concrete.EntityFramework.Contexts;
-using Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories;
 using Erkan.ToDo.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,6 +13,12 @@ namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories
         {
             using var context = new ToDoContext();
             return context.Tasks.Include(I => I.Importance).Include(I => I.Reports).Include(I => I.AppUser).Where(I => !I.Statement).OrderByDescending(I => I.CreatedDate).ToList();
+        }
+
+        public Task GetByTaskId(int id)
+        {
+            using var context = new ToDoContext();
+            return context.Tasks.Include(I => I.Reports).Where(I => I.Id == id).Include(I=>I.AppUser).FirstOrDefault();
         }
 
         public List<Task> GetByAppUserId(int appUserId)
