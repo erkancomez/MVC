@@ -93,5 +93,11 @@ namespace Erkan.ToDo.Web.Controllers
 
             return View(model);
         }
+
+        public async Task<IActionResult> SignOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index");
+        }
     }
 }
