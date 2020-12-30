@@ -18,12 +18,14 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
         private readonly IAppUserService _appUserService;
         private readonly ITaskService _taskService;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IFileService _fileService;
 
-        public WorkOrderController(IAppUserService appUserService, ITaskService taskService, UserManager<AppUser> userManager)
+        public WorkOrderController(IAppUserService appUserService, ITaskService taskService, UserManager<AppUser> userManager, IFileService fileService)
         {
             _appUserService = appUserService;
             _taskService = taskService;
             _userManager = userManager;
+            _fileService = fileService;
         }
 
         public IActionResult Index()
@@ -59,6 +61,8 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
             var task = _taskService.GetByTaskId(id);
             TaskListAllViewModel model = new TaskListAllViewModel
             {
+                Id = task.Id,
+                Importance = task.Importance,
                 Reports = task.Reports,
                 Name = task.Name,
                 Explanation = task.Explanation,
@@ -67,6 +71,18 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 
             return View(model);
 
+        }
+
+        public IActionResult GetExcel(int id)
+        {
+            return File(_fileService.TransferExcel(_taskService.GetByTaskId(id).Reports), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", Guid.NewGuid() + ".xlsx");
+        }
+
+        public IActionResult GetPdf(int id)
+        {
+            var path = _fileService.TranferPdf(_taskService.GetByTaskId(id).Reports);
+
+            return File(path, "aplication/pdf", Guid.NewGuid() + ".pdf");
         }
 
         public IActionResult AssignStaff(int id, string s, int page = 1)

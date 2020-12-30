@@ -23,6 +23,7 @@ namespace Erkan.ToDo.Web
             services.AddScoped<IImportanceService, ImportanceManager>();
             services.AddScoped<IReportService, ReportManager>();
             services.AddScoped<IAppUserService, AppUserManager>();
+            services.AddScoped<IFileService, FileManager>();
 
             services.AddScoped<ITaskDal, EfTaskRepository>();
             services.AddScoped<IReportDal, EfReportRepository>();
