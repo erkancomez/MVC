@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Erkan.ToDo.Web.Areas.Admin.ViewComponents
+namespace Erkan.ToDo.Web.ViewComponents
 {
     public class Wrapper : ViewComponent
     {
@@ -31,9 +31,13 @@ namespace Erkan.ToDo.Web.Areas.Admin.ViewComponents
                 Email = user.Email
             };
 
+            var roles = _userManager.GetRolesAsync(user).Result;
+            if (roles.Contains("Admin"))
+            {
+                return View(model);
+            }
 
-
-            return View(model);
+            return View("Member",model);
         }
     }
 }
