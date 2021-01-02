@@ -31,8 +31,8 @@
                         Hiç rapor yazmadınız. Görevinizde ki ilerlemelerinizden bahsedin.
                     </span>
 
-                    <a href="#" class="btn btn-primary btn-sm">
-                        Rapor Yaz
+                    <a asp-action="AddReport" asp-route-id="@task.Id" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus-circle mr-2"></i>Rapor Yaz
                     </a>
                 }
 
@@ -41,6 +41,9 @@
                 </a>
             </p>
             <div class="collapse" id="collapseExample-@index">
+                <a asp-action="AddReport" asp-route-id="@task.Id" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus-circle mr-2"></i>Rapor Yaz
+                </a>
                 <table class="table table-hover table-bordered table-sm">
                     <tr>
                         <th>Tanım</th>
@@ -49,11 +52,11 @@
                     </tr>
                     @foreach (var rapor in task.Reports)
                     {
-                <tr>
-                    <td>@rapor.Describtion</td>
-                    <td>@rapor.Detail</td>
-                    <td><a href="#">Düzenle</a></td>
-                </tr>
+                        <tr>
+                            <td>@rapor.Describtion</td>
+                            <td>@rapor.Detail</td>
+                            <td><a asp-action="UpdateReport" asp-route-id="@rapor.Id" class="btn btn-warning btn-sm"><i class="far fa-edit mr-2"></i>Düzenle</a></td>
+                        </tr>
                     }
                 </table>
             </div>

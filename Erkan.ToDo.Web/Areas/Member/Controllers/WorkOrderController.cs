@@ -1,5 +1,7 @@
 ﻿using Erkan.ToDo.Business.Abstract;
+using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.Areas.Admin.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,16 +14,23 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
     public class WorkOrderController : Controller
     {
         private readonly ITaskService _taskService;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IReportService _reportService;
 
-        public WorkOrderController(ITaskService taskService)
+        public WorkOrderController(ITaskService taskService, UserManager<AppUser> userManager, IReportService reportService)
         {
             _taskService = taskService;
+            _userManager = userManager;
+            _reportService = reportService;
         }
 
-        public IActionResult Index(int id)
+        public async Task<IActionResult> Index()
         {
             TempData["Active"] = "workOrder";
-            var tasks = _taskService.GetAllTable(I => I.AppUserId == id && !I.Statement);
+
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            var tasks = _taskService.GetAllTable(I => I.AppUserId == user.Id && !I.Statement);
 
             List<TaskListAllViewModel> models = new List<TaskListAllViewModel>();
 
@@ -42,6 +51,15 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
             }
 
             return View(models);
+        }
+
+        public IActionResult AddReport(int id)
+        {
+            ReportAddViewModel model = new ReportAddViewModel
+            {
+                TaskId = id
+            };
+            return View(model);
         }
     }
 }
