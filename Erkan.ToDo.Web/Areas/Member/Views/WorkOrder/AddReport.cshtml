@@ -4,12 +4,19 @@
     Layout = "~/Areas/Member/Views/Shared/_MemberLayout.cshtml";
 }
 
-<form method="post" asp-action="AddReport" class="w-75 mx-auto p-3">
+<form method="post" asp-action="AddReport" class="p-3">
+    <div class="card text-white bg-primary my-3">
+        <div class="card-header">@Model.Task.Name</div>
+        <div class="card-body">
+            <h4 class="card-title">Görevin Aciliyet Durumu: @Model.Task.Importance.Definition</h4>
+            <p class="card-text">Görevin Açıklaması: @Model.Task.Explanation</p>
+        </div>
+    </div>
     <input type="hidden" asp-for="TaskId" />
     <div class="form-group">
-        <label asp-for="Definition"></label>
-        <span asp-validation-for="Definition" class="text-danger"></span>
-        <input asp-for="Definition" class="form-control" />
+        <label asp-for="Describtion"></label>
+        <span asp-validation-for="Describtion" class="text-danger"></span>
+        <input asp-for="Describtion" class="form-control" />
     </div>
     <div class="form-group">
         <label asp-for="Detail"></label>
@@ -18,6 +25,7 @@
     </div>
 
     <div class="form-group">
+        <a asp-action="Index" class="btn btn-warning btn-sm"><i class="fas fa-chevron-circle-left mr-2"></i>Vazgeç</a>
         <button type="submit" class="btn btn-info btn-sm"><i class="fas fa-check mr-2"></i>Kaydet</button>
     </div>
 </form>

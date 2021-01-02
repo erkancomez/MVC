@@ -55,11 +55,34 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
 
         public IActionResult AddReport(int id)
         {
+            TempData["Active"] = "workOrder";
+            var task = _taskService.GetImportanceById(id);
+
             ReportAddViewModel model = new ReportAddViewModel
             {
-                TaskId = id
+                TaskId = id,
+                Task = task
             };
             return View(model);
         }
+
+        [HttpPost]
+        public IActionResult AddReport(ReportAddViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _reportService.Save(new Report
+                {
+                    TaskId = model.TaskId,
+                    Describtion = model.Describtion,
+                    Detail = model.Detail
+
+                });
+
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
     }
 }
