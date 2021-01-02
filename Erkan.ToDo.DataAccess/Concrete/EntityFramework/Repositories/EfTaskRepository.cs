@@ -2,8 +2,10 @@
 using Erkan.ToDo.DataAccess.Concrete.EntityFramework.Contexts;
 using Erkan.ToDo.Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories
 {
@@ -37,6 +39,12 @@ namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories
         {
             using var context = new ToDoContext();
             return context.Tasks.Include(I => I.Importance).FirstOrDefault(I => !I.Statement && I.Id == id);
+        }
+
+        public List<Task> GetAllTable(Expression<Func<Task, bool>> filter)
+        {
+            using var context = new ToDoContext();
+            return context.Tasks.Include(I => I.Importance).Include(I => I.Reports).Include(I => I.AppUser).Where(filter).OrderByDescending(I => I.CreatedDate).ToList();
         }
     }
 }

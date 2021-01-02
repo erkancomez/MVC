@@ -10,10 +10,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Erkan.ToDo.Web.Areas.Admin.Controllers
+namespace Erkan.ToDo.Web.Areas.Member.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Area("Member")]
+    [Authorize(Roles = "Member")]
     public class ProfileController : Controller
     {
         private readonly UserManager<AppUser> _userManager;

@@ -1,1 +1,21 @@
-﻿<h4>Member</h4>
+﻿@model AppUserListViewModel
+
+@{
+    string active = string.Empty;
+    if (TempData["Active"] != null)
+    {
+        active = TempData["Active"].ToString();
+    }
+    //string active2 = TempData["Active"]?.ToString();
+}
+
+<div class="border border-right " id="sidebar-wrapper">
+    <div class="sidebar-heading"><img src="~/img/@Model.Picture" alt="@Model.Name" style="height:10rem!important;" class="w-auto modal-dialog-centered img-thumbnail" /></div>
+    <div class="list-group list-group-flush">
+                <a asp-action="Index" asp-controller="WorkOrder" asp-route-id="@Model.Id" class="list-group-item list-group-item-action @(active=="workOrder"?"active":"")"><i class="fas fa-arrow-circle-down mr-2"></i>Gelen İş Emirleri</a>
+        <a href="#" class="list-group-item list-group-item-action "><i class="far fa-check-circle mr-2"></i>Tamamladığım İşler</a>
+        <a asp-action="Index" asp-controller="Importance" class="list-group-item list-group-item-action @(active=="xxxx"?"active":"")"><i class="fas fa-bell mr-2"></i>Bildirimler</a>
+        <a asp-action="Index" asp-controller="Profile" class="list-group-item list-group-item-action  @(active=="profile"?"active":"")"><i class="fas fa-user mr-2"></i>Profil</a>
+        <a asp-area="" asp-action="SignOut" asp-controller="Home" class="list-group-item list-group-item-action "><i class="fas fa-sign-out-alt mr-2"></i>Çıkış</a>
+    </div>
+</div>

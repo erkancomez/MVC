@@ -1,0 +1,85 @@
+﻿@model AppUserListViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Member/Views/Shared/_MemberLayout.cshtml";
+}
+
+
+@if (TempData["message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["message"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<form asp-action="Index" method="post" class="w-75 mx-auto p-3" enctype="multipart/form-data">
+    <input type="hidden" asp-for="@Model.Id" />
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <span asp-validation-for="Name" class="text-danger"></span>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SurName"></label>
+        <span asp-validation-for="SurName" class="text-danger"></span>
+        <input asp-for="SurName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <div class="form-group mt-2">
+        <div class="row">
+            <div class="col-md-2">
+
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <h5 class="">Profil Resmi: </h5>
+                    <img src="~/img/@Model.Picture" class="w-auto" style="height:10rem!important" alt="@Model.Name" />
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                <div id="preview" style="display:none!important">
+                    <h5 class="">Seçilen Resim: </h5>
+                    <img id="picPreview" src="" class="w-auto" style="height:10rem!important" />
+                </div>
+
+            </div>
+            <div class="col-md-2">
+
+            </div>
+            <div class="col-md-12">
+                <label>Resim Seç: </label>
+                <input type="file" class="form-control-file" name="picture" id="Picture" />
+            </div>
+        </div>
+
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-info btn-sm"><i class="far fa-check-circle mr-2"></i>Kaydet</button>
+    </div>
+
+
+</form>
+
+
+
+@section JavaScript
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#Picture").change(function (e) {
+                $("#preview").show();
+                $("#picPreview").attr('src', URL.createObjectURL(e.target.files[0]));
+            })
+        })
+    </script>
+}
+

@@ -2,7 +2,9 @@
 using Erkan.ToDo.DataAccess.Abstract;
 using Erkan.ToDo.DataAccess.Concrete.EntityFramework;
 using Erkan.ToDo.Entities.Concrete;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Erkan.ToDo.Business.Concrete
 {
@@ -28,6 +30,11 @@ namespace Erkan.ToDo.Business.Concrete
         public List<Task> GetAllTable()
         {
             return _taskDal.GetAllTable();
+        }
+
+        public List<Task> GetAllTable(Expression<Func<Task, bool>> filter)
+        {
+            return _taskDal.GetAllTable(filter);
         }
 
         public List<Task> GetByAppUserId(int appUserId)
