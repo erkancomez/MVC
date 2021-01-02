@@ -7,5 +7,6 @@ namespace Erkan.ToDo.DataAccess.Abstract
 {
     public interface IReportDal : IGenericDal<Report>
     {
+        Report GetByTaskId(int id);
     }
 }

@@ -84,5 +84,48 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
             return View(model);
         }
 
+        public IActionResult UpdateReport(int id)
+        {
+            TempData["Active"] = "workOrder";
+            var report = _reportService.GetByTaskId(id);
+            ReportUpdateViewModel model = new ReportUpdateViewModel
+            {
+                Id = report.Id,
+                TaskId = report.TaskId,
+                Task = report.Task,
+                Describtion = report.Describtion,
+                Detail = report.Detail
+            };
+
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateReport(ReportUpdateViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var updateReport = _reportService.GetId(model.Id);
+
+                updateReport.Describtion = model.Describtion;
+                updateReport.Detail = model.Detail;
+
+                _reportService.Update(updateReport);
+
+                return RedirectToAction("Index");
+            }
+            return View(model);
+        }
+
+        public IActionResult CompleteTask(int taskId)
+        {
+            var updatetask = _taskService.GetId(taskId);
+            updatetask.Statement = true;
+            _taskService.Update(updatetask);
+            return Json(null);
+        }
+
     }
+
 }

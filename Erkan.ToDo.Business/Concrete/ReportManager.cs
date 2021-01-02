@@ -25,6 +25,11 @@ namespace Erkan.ToDo.Business.Concrete
             return _reportDal.GetAll();
         }
 
+        public Report GetByTaskId(int id)
+        {
+            return _reportDal.GetByTaskId(id);
+        }
+
         public Report GetId(int Id)
         {
             return _reportDal.GetId(Id);
