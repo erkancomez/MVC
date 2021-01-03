@@ -24,11 +24,13 @@ namespace Erkan.ToDo.Web
             services.AddScoped<IReportService, ReportManager>();
             services.AddScoped<IAppUserService, AppUserManager>();
             services.AddScoped<IFileService, FileManager>();
+            services.AddScoped<INotificationService, NotificationManager>();
 
             services.AddScoped<ITaskDal, EfTaskRepository>();
             services.AddScoped<IReportDal, EfReportRepository>();
             services.AddScoped<IImportanceDal, EfImportanceRepository>();
             services.AddScoped<IAppUserDal, EfAppUserRepository>();
+            services.AddScoped<INotificationDal, EfNotificationRepository>();
 
             services.AddDbContext<ToDoContext>();
             services.AddIdentity<AppUser, AppRole>(opt =>

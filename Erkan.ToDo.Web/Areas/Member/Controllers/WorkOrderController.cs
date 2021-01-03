@@ -18,12 +18,14 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
         private readonly ITaskService _taskService;
         private readonly UserManager<AppUser> _userManager;
         private readonly IReportService _reportService;
+        private readonly INotificationService _notificationService;
 
-        public WorkOrderController(ITaskService taskService, UserManager<AppUser> userManager, IReportService reportService)
+        public WorkOrderController(ITaskService taskService, UserManager<AppUser> userManager, IReportService reportService, INotificationService notificationService)
         {
             _taskService = taskService;
             _userManager = userManager;
             _reportService = reportService;
+            _notificationService = notificationService;
         }
 
         public async Task<IActionResult> Index()
@@ -69,7 +71,7 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddReport(ReportAddViewModel model)
+        public async Task<IActionResult> AddReportAsync(ReportAddViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -80,6 +82,20 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
                     Detail = model.Detail
 
                 });
+
+                var adminUserList = await _userManager.GetUsersInRoleAsync("Admin");
+
+                var activeUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
+                foreach (var admin in adminUserList)
+                {
+                    _notificationService.Save(new Notification
+                    {
+                        Explanation = $"{activeUser.Name} {activeUser.SurName} yeni bir rapor yazdı.",
+                        AppUserId = admin.Id
+                    });
+                }
+
 
                 return RedirectToAction("Index");
             }
@@ -120,11 +136,25 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
             return View(model);
         }
 
-        public IActionResult CompleteTask(int taskId)
+        public async Task<IActionResult> CompleteTaskAsync(int taskId)
         {
             var updatetask = _taskService.GetId(taskId);
             updatetask.Statement = true;
             _taskService.Update(updatetask);
+
+            var adminUserList = await _userManager.GetUsersInRoleAsync("Admin");
+
+            var activeUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            foreach (var admin in adminUserList)
+            {
+                _notificationService.Save(new Notification
+                {
+                    Explanation = $"{activeUser.Name} {activeUser.SurName} vermiş olduğunuz bir görevi tamamladı.",
+                    AppUserId = admin.Id
+                });
+            }
+
             return Json(null);
         }
 
