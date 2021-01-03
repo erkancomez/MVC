@@ -31,6 +31,11 @@ namespace Erkan.ToDo.Business.Concrete
             return _notificationDal.GetId(Id);
         }
 
+        public List<Notification> GetUnread(int AppUserId)
+        {
+            return _notificationDal.GetUnread(AppUserId);
+        }
+
         public void Save(Notification table)
         {
             _notificationDal.Save(table);

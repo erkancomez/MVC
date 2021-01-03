@@ -1,4 +1,5 @@
-﻿using Erkan.ToDo.Entities.Concrete;
+﻿using Erkan.ToDo.Business.Abstract;
+using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.Areas.Admin.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,11 @@ namespace Erkan.ToDo.Web.ViewComponents
     public class Wrapper : ViewComponent
     {
         private readonly UserManager<AppUser> _userManager;
-
-        public Wrapper(UserManager<AppUser> userManager)
+        private readonly INotificationService _notificationService;
+        public Wrapper(UserManager<AppUser> userManager, INotificationService notificationService)
         {
             _userManager = userManager;
+            _notificationService = notificationService;
         }
 
         public IViewComponentResult Invoke()
@@ -30,6 +32,9 @@ namespace Erkan.ToDo.Web.ViewComponents
                 Picture = user.Picture,
                 Email = user.Email
             };
+
+            var notification = _notificationService.GetUnread(user.Id).Count;
+            ViewBag.NotificationCount = notification;
 
             var roles = _userManager.GetRolesAsync(user).Result;
             if (roles.Contains("Admin"))

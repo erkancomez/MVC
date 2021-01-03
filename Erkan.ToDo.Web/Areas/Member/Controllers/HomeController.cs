@@ -13,6 +13,7 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
     {
         public IActionResult Index()
         {
+            TempData["Active"] = "home";
             return View();
         }
     }

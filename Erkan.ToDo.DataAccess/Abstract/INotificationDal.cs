@@ -7,5 +7,6 @@ namespace Erkan.ToDo.DataAccess.Abstract
 {
     public interface INotificationDal : IGenericDal<Notification>
     {
+        List<Notification> GetUnread(int AppUserId);
     }
 }

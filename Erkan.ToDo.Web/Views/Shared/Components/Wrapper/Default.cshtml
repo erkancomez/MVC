@@ -17,7 +17,14 @@
         <a asp-action="Index" asp-controller="workOrder" class="list-group-item list-group-item-action  @(active=="workorder"?"active":"")"><i class="fas fa-business-time mr-2"></i>İş Emirleri</a>
         <a href="#" class="list-group-item list-group-item-action "><i class="fas fa-chart-pie mr-2"></i>Grafikler</a>
         <a href="#" class="list-group-item list-group-item-action "><i class="fas fa-chart-bar mr-2"></i>İstatistikler</a>
-        <a asp-action="Index" asp-controller="Importance" class="list-group-item list-group-item-action @(active=="xxxx"?"active":"")"><i class="fas fa-bell mr-2"></i>Bildirimler</a>
+        <a asp-action="Index" asp-controller="Notification" class="list-group-item list-group-item-action @(active=="notification"?"active":"") position-relative ">
+            <i class="fas fa-bell mr-2"></i>
+            @if (ViewBag.NotificationCount > 0)
+            {
+                <sub class="badge badge-primary badge-pill position-absolute" style="bottom:1rem!important; left:7.6rem!important">@ViewBag.NotificationCount</sub>
+            }
+            Bildirimler
+        </a>
         <a asp-action="Index" asp-controller="Profile" class="list-group-item list-group-item-action  @(active=="profile"?"active":"")"><i class="fas fa-user mr-2"></i>Profil</a>
         <a asp-area="" asp-action="SignOut" asp-controller="Home" class="list-group-item list-group-item-action "><i class="fas fa-sign-out-alt mr-2"></i>Çıkış</a>
     </div>
