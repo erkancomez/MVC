@@ -27,6 +27,7 @@ namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<AppUser> AppUsers { get; set; }
         public DbSet<Importance> Importances { get; set; }
         public DbSet<Report> Reports { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
     }
 }

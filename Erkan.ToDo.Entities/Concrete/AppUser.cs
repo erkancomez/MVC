@@ -12,6 +12,8 @@ namespace Erkan.ToDo.Entities.Concrete
         public string SurName { get; set; }
         public string Picture { get; set; } = "default.png";
 
+        public List<Notification> Notifications { get; set; }
+
         public List<Task> Tasks { get; set; }
     }
 }

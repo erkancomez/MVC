@@ -28,8 +28,7 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
         {
             TempData["Active"] = "task";
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            int totalPage;
-            var tasks = _taskService.GetAllTableInCompleted(out totalPage, user.Id, activePage);
+            var tasks = _taskService.GetAllTableInCompleted(out int totalPage, user.Id, activePage);
 
             ViewBag.TotalPage = totalPage;
             ViewBag.ActivePage = activePage;
