@@ -14,5 +14,7 @@ namespace Erkan.ToDo.DataAccess.Abstract
         Task GetImportanceById(int id);
         List<Task> GetByAppUserId(int appUserId);
         Task GetByTaskId(int id);
+        int GetCompletedTaskCountByUserId(int id);
+        int GetIncompletedTaskCountByUserId(int id);
     }
 }

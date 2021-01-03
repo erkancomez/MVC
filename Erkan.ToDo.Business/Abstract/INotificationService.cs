@@ -7,6 +7,7 @@ namespace Erkan.ToDo.Business.Abstract
 {
     public interface INotificationService : IGenericService<Notification>
     {
-        List<Notification> GetUnread(int AppUserId);
+        List<Notification> GetUnread(int appUserId);
+        int GetUnreadCountByAppUserId(int appUserId);
     }
 }

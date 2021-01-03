@@ -8,6 +8,7 @@ namespace Erkan.ToDo.Business.Abstract
     public interface IReportService : IGenericService<Report>
     {
         Report GetByTaskId(int id);
+        int GetReportCountByAppUserId(int id);
     }
 
 }

@@ -57,6 +57,11 @@ namespace Erkan.ToDo.Business.Concrete
             return _taskDal.GetByTaskId(id);
         }
 
+        public int GetCompletedTaskCountByUserId(int id)
+        {
+            return _taskDal.GetCompletedTaskCountByUserId(id);
+        }
+
         public Task GetId(int Id)
         {
             return _taskDal.GetId(Id);
@@ -65,6 +70,11 @@ namespace Erkan.ToDo.Business.Concrete
         public Task GetImportanceById(int id)
         {
             return _taskDal.GetImportanceById(id);
+        }
+
+        public int GetIncompletedTaskCountByUserId(int id)
+        {
+            return _taskDal.GetIncompletedTaskCountByUserId(id);
         }
 
         public void Save(Task table)

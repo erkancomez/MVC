@@ -35,6 +35,11 @@ namespace Erkan.ToDo.Business.Concrete
             return _reportDal.GetId(Id);
         }
 
+        public int GetReportCountByAppUserId(int id)
+        {
+            return _reportDal.GetReportCountByAppUserId(id);
+        }
+
         public void Save(Report table)
         {
             _reportDal.Save(table);

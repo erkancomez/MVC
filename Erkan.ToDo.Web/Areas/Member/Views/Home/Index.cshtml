@@ -3,4 +3,80 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Member/Views/Shared/_MemberLayout.cshtml";
 }
+<div class="row mt-3">
+    <div class="col-md-6">
+        <div class="card text-white bg-primary mb-3 text-center">
+            <div class="card-body">
+                <h4 class="card-title">Tamamlanan Görev Sayısı</h4>
+                @if (ViewBag.CompletedTaskCount > 0)
+                {
+                    <p class="card-text display-4">@ViewBag.CompletedTaskCount</p>
+                    <p class="text-center">
+                        İncelemek için <a asp-action="Index" asp-controller="Task" class="text-white">tıklayınız<i class="fas fa-chevron-circle-right ml-2"></i></a>
+                    </p>
+                }
+                else
+                {
+                    <p class="card-text">Herhangi bir görev tamamlamamışsınız.</p>
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-white bg-primary mb-3 text-center">
+            <div class="card-body">
+                <h4 class="card-title">Tamamlanmamış Görev Sayısı</h4>
+                @if (ViewBag.IncompletedTaskCount > 0)
+                {
+                    <p class="card-text display-4">@ViewBag.IncompletedTaskCount</p>
+                    <p class="text-center">
+                        İncelemek için <a asp-action="Index" asp-controller="WorkOrder" class="text-white">tıklayınız<i class="fas fa-chevron-circle-right ml-2"></i></a>
+                    </p>
+                }
+                else
+                {
+                    <p class="card-text">Herhangi bir tamamlamanız gereken görev sayınız yoktur.</p>
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-white bg-primary mb-3 text-center">
+            <div class="card-body">
+                <h4 class="card-title">Gelen Bildirimler</h4>
+                @if (ViewBag.UnreadNotification > 0)
+                {
+                    <p class="card-text display-4">@ViewBag.UnreadNotification</p>
+                    <p class="text-center">
+                        İncelemek için <a asp-action="Index" asp-controller="Notification" class="text-white">tıklayınız<i class="fas fa-chevron-circle-right ml-2"></i></a>
+                    </p>
+                }
+                else
+                {
+                    <p class="card-text">Herhangi bir okunmamış bildiriminiz yoktur.</p>
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-white bg-primary mb-3 text-center">
+            <div class="card-body">
+                <h4 class="card-title">Rapor Sayısı</h4>
+                @if (ViewBag.ReportCount > 0)
+                {
+                    <p class="card-text display-4">@ViewBag.ReportCount</p>
+                }
+                else
+                {
+                    <p class="card-text">Herhangi bir rapor yazmamışsınız.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
 

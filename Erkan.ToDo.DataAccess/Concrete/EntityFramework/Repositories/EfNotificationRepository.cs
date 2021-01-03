@@ -10,10 +10,16 @@ namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories
 {
     public class EfNotificationRepository : EfGenericRepository<Notification>, INotificationDal
     {
-        public List<Notification> GetUnread(int AppUserId)
+        public List<Notification> GetUnread(int appUserId)
         {
             using var context = new ToDoContext();
-            return context.Notifications.Where(I => I.AppUserId == AppUserId && !I.Statement).ToList();
+            return context.Notifications.Where(I => I.AppUserId == appUserId && !I.Statement).ToList();
+        }
+
+        public int GetUnreadCountByAppUserId(int appUserId)
+        {
+            using var context = new ToDoContext();
+            return context.Notifications.Count(I => I.AppUserId == appUserId && !I.Statement);
         }
     }
 }

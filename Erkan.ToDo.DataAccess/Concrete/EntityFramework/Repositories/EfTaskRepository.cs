@@ -56,5 +56,17 @@ namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories
 
             return returnValue.Skip((activePage - 1) * 3).Take(3).ToList();
         }
+
+        public int GetCompletedTaskCountByUserId(int id)
+        {
+            using var context = new ToDoContext();
+            return context.Tasks.Count(I => I.AppUserId == id && I.Statement);
+        }
+
+        public int GetIncompletedTaskCountByUserId(int id)
+        {
+            using var context = new ToDoContext();
+            return context.Tasks.Count(I => I.AppUserId == id && !I.Statement);
+        }
     }
 }
