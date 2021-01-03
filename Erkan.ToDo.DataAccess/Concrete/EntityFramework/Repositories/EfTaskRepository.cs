@@ -46,5 +46,15 @@ namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories
             using var context = new ToDoContext();
             return context.Tasks.Include(I => I.Importance).Include(I => I.Reports).Include(I => I.AppUser).Where(filter).OrderByDescending(I => I.CreatedDate).ToList();
         }
+
+        public List<Task> GetAllTableInCompleted(out int totalPage, int userId, int activePage=1)
+        {
+            using var context = new ToDoContext();
+            var returnValue = context.Tasks.Include(I => I.Importance).Include(I => I.Reports).Include(I => I.AppUser).Where(I => I.AppUserId == userId && I.Statement).OrderByDescending(I => I.CreatedDate);
+
+            totalPage =(int)Math.Ceiling((double)returnValue.Count() / 3);
+
+            return returnValue.Skip((activePage - 1) * 3).Take(3).ToList();
+        }
     }
 }

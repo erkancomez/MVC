@@ -14,5 +14,6 @@ namespace Erkan.ToDo.Business.Abstract
         List<Task> GetByAppUserId(int appUserId);
         Task GetByTaskId(int id);
         List<Task> GetAllTable(Expression<Func<Task, bool>> filter);
+        List<Task> GetAllTableInCompleted(out int totalPage, int userId, int activePage=1);
     }
 }

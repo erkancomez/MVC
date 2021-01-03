@@ -1,6 +1,7 @@
 ﻿using Erkan.ToDo.Business.Abstract;
 using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.Areas.Admin.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Erkan.ToDo.Web.Areas.Member.Controllers
 {
+    [Authorize(Roles="Member")]
     [Area("Member")]
     public class WorkOrderController : Controller
     {

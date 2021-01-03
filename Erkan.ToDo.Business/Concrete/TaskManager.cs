@@ -37,6 +37,11 @@ namespace Erkan.ToDo.Business.Concrete
             return _taskDal.GetAllTable(filter);
         }
 
+        public List<Task> GetAllTableInCompleted(out int totalPage, int userId, int activePage)
+        {
+            return _taskDal.GetAllTableInCompleted(out totalPage, userId, activePage);
+        }
+
         public List<Task> GetByAppUserId(int appUserId)
         {
             return _taskDal.GetByAppUserId(appUserId);
