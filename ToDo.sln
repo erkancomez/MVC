@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Erkan.ToDo.Business", "Erka
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Erkan.ToDo.Entities", "Erkan.ToDo.Entities\Erkan.ToDo.Entities.csproj", "{0543E4E6-4535-4B83-BB47-2AE4054C8E90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erkan.ToDo.Web", "Erkan.ToDo.Web\Erkan.ToDo.Web.csproj", "{D36EB12C-2997-428F-A4A1-711B01205C51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Erkan.ToDo.Web", "Erkan.ToDo.Web\Erkan.ToDo.Web.csproj", "{D36EB12C-2997-428F-A4A1-711B01205C51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Erkan.ToDo.DTO", "Erkan.ToDo.DTO\Erkan.ToDo.DTO.csproj", "{8985F0A9-9B7B-4034-9763-114D1B5D457D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{D36EB12C-2997-428F-A4A1-711B01205C51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D36EB12C-2997-428F-A4A1-711B01205C51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D36EB12C-2997-428F-A4A1-711B01205C51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8985F0A9-9B7B-4034-9763-114D1B5D457D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8985F0A9-9B7B-4034-9763-114D1B5D457D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8985F0A9-9B7B-4034-9763-114D1B5D457D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8985F0A9-9B7B-4034-9763-114D1B5D457D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
