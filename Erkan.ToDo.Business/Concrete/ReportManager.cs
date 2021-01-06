@@ -35,6 +35,11 @@ namespace Erkan.ToDo.Business.Concrete
             return _reportDal.GetId(Id);
         }
 
+        public int GetReportCount()
+        {
+            return _reportDal.GetReportCount();
+        }
+
         public int GetReportCountByAppUserId(int id)
         {
             return _reportDal.GetReportCountByAppUserId(id);

@@ -16,5 +16,8 @@ namespace Erkan.ToDo.DataAccess.Abstract
         Task GetByTaskId(int id);
         int GetCompletedTaskCountByUserId(int id);
         int GetIncompletedTaskCountByUserId(int id);
+        int GetUnAssignedTask();
+        int GetCompletedTask();
+
     }
 }

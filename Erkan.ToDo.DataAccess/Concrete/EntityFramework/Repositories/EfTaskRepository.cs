@@ -68,5 +68,17 @@ namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories
             using var context = new ToDoContext();
             return context.Tasks.Count(I => I.AppUserId == id && !I.Statement);
         }
+
+        public int GetUnAssignedTask()
+        {
+            using var context = new ToDoContext();
+            return context.Tasks.Count(I => I.AppUserId == null && !I.Statement);
+        }
+
+        public int GetCompletedTask()
+        {
+            using var context = new ToDoContext();
+            return context.Tasks.Count(I => I.Statement);
+        }
     }
 }

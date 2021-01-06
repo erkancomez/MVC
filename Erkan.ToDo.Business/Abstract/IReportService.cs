@@ -9,6 +9,7 @@ namespace Erkan.ToDo.Business.Abstract
     {
         Report GetByTaskId(int id);
         int GetReportCountByAppUserId(int id);
+        int GetReportCount();
     }
 
 }

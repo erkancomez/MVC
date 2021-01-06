@@ -22,5 +22,11 @@ namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories
             using var context = new ToDoContext();
             return context.Tasks.Include(I => I.Reports).Where(I => I.AppUserId == id).SelectMany(I=>I.Reports).Count();
         }
+
+        public int GetReportCount()
+        {
+            using var context = new ToDoContext();
+            return context.Reports.Count();
+        }
     }
 }

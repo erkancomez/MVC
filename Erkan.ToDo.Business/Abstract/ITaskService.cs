@@ -17,5 +17,7 @@ namespace Erkan.ToDo.Business.Abstract
         List<Task> GetAllTableInCompleted(out int totalPage, int userId, int activePage=1);
         int GetCompletedTaskCountByUserId(int id);
         int GetIncompletedTaskCountByUserId(int id);
+        int GetUnAssignedTask();
+        int GetCompletedTask();
     }
 }
