@@ -16,6 +16,16 @@ namespace Erkan.ToDo.Business.Concrete
             _userDal = userDal;
         }
 
+        public List<DualHelper> GetMostCompletedStaff()
+        {
+            return _userDal.GetMostCompletedStaff();
+        }
+
+        public List<DualHelper> GetMostWorkingStaff()
+        {
+            return _userDal.GetMostWorkingStaff();
+        }
+
         public List<AppUser> GetNonAdmin()
         {
             return _userDal.GetNonAdmin();

@@ -1,6 +1,7 @@
 ﻿using Erkan.ToDo.DataAccess.Abstract;
 using Erkan.ToDo.DataAccess.Concrete.EntityFramework.Contexts;
 using Erkan.ToDo.Entities.Concrete;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,6 +78,25 @@ namespace Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories
 
             return result.ToList();
 
+        }
+
+        public List<DualHelper> GetMostCompletedStaff()
+        {
+            using var context = new ToDoContext();
+            return context.Tasks.Include(I => I.AppUser).Where(I => I.Statement).GroupBy(I => I.AppUser.UserName).OrderByDescending(I => I.Count()).Take(5).Select(I => new DualHelper
+            {
+                Name = I.Key,
+                TaskCount = I.Count()
+            }).ToList();
+        }
+        public List<DualHelper> GetMostWorkingStaff()
+        {
+            using var context = new ToDoContext();
+            return context.Tasks.Include(I => I.AppUser).Where(I => !I.Statement && I.AppUserId!=null).GroupBy(I => I.AppUser.UserName).OrderByDescending(I => I.Count()).Take(5).Select(I => new DualHelper
+            {
+                Name = I.Key,
+                TaskCount = I.Count()
+            }).ToList();
         }
     }
 }

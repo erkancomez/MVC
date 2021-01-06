@@ -9,5 +9,7 @@ namespace Erkan.ToDo.Business.Abstract
     {
         List<AppUser> GetNonAdmin();
         List<AppUser> GetNonAdmin(out int totalPage, string searchingWord, int activePaging = 1);
+        List<DualHelper> GetMostCompletedStaff();
+        List<DualHelper> GetMostWorkingStaff();
     }
 }

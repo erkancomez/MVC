@@ -4,51 +4,75 @@
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div id="piechart" style="width: 900px; height: 500px;"></div>
-<div id="piechart_3d" style="width: 900px; height: 500px;"></div>
+<div class="row">
+    <div class="col-md-6">
+        <div id="piechart_3d" class="w-100" style=" height: 500px;"></div>
+    </div>
+    <div class="col-md-6">
+        <div id="piechart" class="w-100" style=" height: 500px;"></div>
+    </div>
+</div>
+
 
 @section JavaScript{
+
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
+
+
         google.charts.load('current', { 'packages': ['corechart'] });
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
 
-            var data = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Work', 11],
-                ['Eat', 2],
-                ['Commute', 2],
-                ['Watch TV', 2],
-                ['Sleep', 7]
-            ]);
+            let MostCompleted = [['Personel Adı', 'Görev Sayısı']];
+
+            $.ajax({
+                type: "Get",
+                url: "./Graphic/MostCompleted",
+                async: false,
+                success: function (data) {
+                    let gelenObje = jQuery.parseJSON(data);
+                    $.each(gelenObje, (index, value) => {
+                        MostCompleted.push([value.Name, value.TaskCount]);
+                    });
+                }
+            })
+
+
+
+            var data = google.visualization.arrayToDataTable(MostCompleted);
 
             var options = {
-                title: 'My Daily Activities'
+                title: 'En Çok İş Tamamlayan 5 Personel'
             };
 
             var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
             chart.draw(data, options);
         }
-    </script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
+
         google.charts.load("current", { packages: ["corechart"] });
-        google.charts.setOnLoadCallback(drawChart);
-        function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-                ['Task', 'Hours per Day'],
-                ['Work', 11],
-                ['Eat', 2],
-                ['Commute', 2],
-                ['Watch TV', 2],
-                ['Sleep', 7]
-            ]);
+        google.charts.setOnLoadCallback(drawChart2);
+        function drawChart2() {
+            let mostWorking = [['Personel Adı', 'Görev Sayısı']];
+            $.ajax({
+                type: "Get",
+                url: "./Graphic/MostWorking",
+                async: false,
+                success: function (data) {
+                    let gelenObje2 = jQuery.parseJSON(data);
+                    $.each(gelenObje2, (index, value) => {
+                        mostWorking.push([value.Name, value.TaskCount]);
+                    });
+                }
+            });
+
+
+            var data = google.visualization.arrayToDataTable(mostWorking);
 
             var options = {
-                title: 'My Daily Activities',
+                title: 'Şuan Görevde Çalışan Personeller',
                 is3D: true,
             };
 
@@ -57,5 +81,5 @@
         }
     </script>
 
-}
 
+}
