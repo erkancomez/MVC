@@ -4,6 +4,7 @@ using Erkan.ToDo.DTO.DTOs.AppUserDtos;
 using Erkan.ToDo.DTO.DTOs.TaskDtos;
 using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.BaseControllers;
+using Erkan.ToDo.Web.StringInfo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,8 +15,8 @@ using System.Linq;
 
 namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 {
-    [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = RoleInfo.Admin)]
+    [Area(AreaInfo.Admin)]
     public class WorkOrderController : BaseIdentityController
     {
         private readonly IAppUserService _appUserService;
@@ -36,14 +37,14 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            TempData["Active"] = "workorder";
+            TempData["Active"] = TempDataInfo.WorkOrder;
 
             return View(_mapper.Map<List<TaskListAllDto>>(_taskService.GetAllTable()));
         }
 
         public IActionResult Detail(int id)
         {
-            TempData["Active"] = "workorder";
+            TempData["Active"] = TempDataInfo.WorkOrder;
             
 
             return View(_mapper.Map<TaskListAllDto>(_taskService.GetByTaskId(id)));
@@ -64,7 +65,7 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 
         public IActionResult AssignStaff(int id, string s, int page = 1)
         {
-            TempData["Active"] = "workorder";
+            TempData["Active"] = TempDataInfo.WorkOrder;
 
             ViewBag.ActivePage = page;
 
@@ -95,7 +96,7 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 
         public IActionResult TaskStaff(StaffTaskDto model)
         {
-            TempData["Active"] = "notification";
+            TempData["Active"] = TempDataInfo.WorkOrder;
 
             StaffTaskListDto staffTaskModel = new StaffTaskListDto
             {

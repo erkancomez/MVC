@@ -3,6 +3,7 @@ using Erkan.ToDo.Business.Abstract;
 using Erkan.ToDo.DTO.DTOs.TaskDtos;
 using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.BaseControllers;
+using Erkan.ToDo.Web.StringInfo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,8 +14,8 @@ using System.Threading.Tasks;
 
 namespace Erkan.ToDo.Web.Areas.Member.Controllers
 {
-    [Authorize(Roles = "Member")]
-    [Area("Member")]
+    [Authorize(Roles = RoleInfo.Member)]
+    [Area(AreaInfo.Member)]
     public class TaskController : BaseIdentityController
     {
         private readonly ITaskService _taskService;
@@ -29,7 +30,7 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
 
         public async Task<IActionResult> Index(int activePage=1)
         {
-            TempData["Active"] = "task";
+            TempData["Active"] = TempDataInfo.Task;
             var user = await GetSignInUser();
             var tasks =_mapper.Map<List<TaskListAllDto>>(_taskService.GetAllTableInCompleted(out int totalPage, user.Id, activePage));
 

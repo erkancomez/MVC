@@ -1,6 +1,7 @@
 ﻿using Erkan.ToDo.Business.Abstract;
 using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.BaseControllers;
+using Erkan.ToDo.Web.StringInfo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -8,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles ="Admin")]
-    [Area("Admin")]
+    [Authorize(Roles = RoleInfo.Admin)]
+    [Area(AreaInfo.Admin)]
     public class HomeController : BaseIdentityController
     {
         private readonly ITaskService _taskService;
@@ -27,7 +28,7 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
         {
             var user = await GetSignInUser();
 
-            TempData["Active"] = "home";
+            TempData["Active"] = TempDataInfo.Homepage;
 
             ViewBag.UnAssignedTask = _taskService.GetUnAssignedTask();
 

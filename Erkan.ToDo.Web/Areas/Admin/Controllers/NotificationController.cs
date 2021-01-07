@@ -3,6 +3,7 @@ using Erkan.ToDo.Business.Abstract;
 using Erkan.ToDo.DTO.DTOs.NotificationDtos;
 using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.BaseControllers;
+using Erkan.ToDo.Web.StringInfo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +12,8 @@ using System.Threading.Tasks;
 
 namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    [Area("Admin")]
+    [Authorize(Roles = RoleInfo.Admin)]
+    [Area(AreaInfo.Admin)]
     public class NotificationController : BaseIdentityController
     {
         private readonly INotificationService _notificationService;
@@ -25,7 +26,7 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            TempData["Active"] = "notification";
+            TempData["Active"] = TempDataInfo.Notification;
             var user = await GetSignInUser();
 
             return View(_mapper.Map<List<NotificationListDto>>(_notificationService.GetUnread(user.Id)));
@@ -33,7 +34,7 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Index(int id)
         {
-            TempData["Active"] = "workorder";
+            TempData["Active"] = TempDataInfo.Notification;
             var updateNotification = _notificationService.GetId(id);
             updateNotification.Statement = true;
             _notificationService.Update(updateNotification);

@@ -2,14 +2,15 @@
 using Erkan.ToDo.Business.Abstract;
 using Erkan.ToDo.DTO.DTOs.ImportanceDtos;
 using Erkan.ToDo.Entities.Concrete;
+using Erkan.ToDo.Web.StringInfo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    [Area("Admin")]
+    [Authorize(Roles = RoleInfo.Admin)]
+    [Area(AreaInfo.Admin)]
     public class ImportanceController : Controller
     {
         private readonly IImportanceService _importanceService;
@@ -23,13 +24,13 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            TempData["Active"] = "importance";
+            TempData["Active"] = TempDataInfo.Importance;
 
             return View(_mapper.Map<List<ImportanceListDto>>(_importanceService.GetAll()));
         }
         public IActionResult AddImportance()
         {
-            TempData["Active"] = "importance";
+            TempData["Active"] = TempDataInfo.Importance;
             return View(new ImportanceAddDto());
         }
         [HttpPost]
@@ -46,7 +47,7 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
         }
         public IActionResult UpdateImportance(int id)
         {
-            TempData["Active"] = "importance";
+            TempData["Active"] = TempDataInfo.Importance;
 
             return View(_mapper.Map<ImportanceUpdateDto>(_importanceService.GetId(id)));
         }

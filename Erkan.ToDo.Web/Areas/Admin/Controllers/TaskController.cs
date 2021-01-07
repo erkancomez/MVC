@@ -2,17 +2,16 @@
 using Erkan.ToDo.Business.Abstract;
 using Erkan.ToDo.DTO.DTOs.TaskDtos;
 using Erkan.ToDo.Entities.Concrete;
+using Erkan.ToDo.Web.StringInfo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    [Area("Admin")]
+    [Authorize(Roles = RoleInfo.Admin)]
+    [Area(AreaInfo.Admin)]
     public class TaskController : Controller
     {
        private readonly ITaskService _taskService;
@@ -28,13 +27,13 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            TempData["Active"] = "task";
+            TempData["Active"] = TempDataInfo.Task;
         
             return View(_mapper.Map<List<TaskListDto>>(_taskService.GetByImportanceIncomplete()));
         }
         public IActionResult AddTask()
         {
-            TempData["Active"] = "task";
+            TempData["Active"] = TempDataInfo.Task;
             ViewBag.Importances =new SelectList( _importanceService.GetAll(), "Id", "Definition");
             return View(new TaskAddDto());
         }
@@ -56,7 +55,7 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
         }
         public IActionResult UpdateTask(int id)
         {
-            TempData["Active"] = "task";
+            TempData["Active"] = TempDataInfo.Task;
            var gorev =  _taskService.GetId(id);
 
 

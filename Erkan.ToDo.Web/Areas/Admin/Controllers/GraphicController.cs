@@ -1,16 +1,13 @@
 ﻿using Erkan.ToDo.Business.Abstract;
+using Erkan.ToDo.Web.StringInfo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    [Area("Admin")]
+    [Authorize(Roles = RoleInfo.Admin)]
+    [Area(AreaInfo.Admin)]
     public class GraphicController : Controller
     {
         private readonly IAppUserService _appUserService;
@@ -22,7 +19,7 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            TempData["Active"] = "graphic";
+            TempData["Active"] = TempDataInfo.Graphic;
             return View();
         }
 

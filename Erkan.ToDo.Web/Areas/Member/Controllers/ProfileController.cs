@@ -2,6 +2,7 @@
 using Erkan.ToDo.DTO.DTOs.AppUserDtos;
 using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.BaseControllers;
+using Erkan.ToDo.Web.StringInfo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -13,8 +14,8 @@ using System.Threading.Tasks;
 
 namespace Erkan.ToDo.Web.Areas.Member.Controllers
 {
-    [Area("Member")]
-    [Authorize(Roles = "Member")]
+    [Authorize(Roles = RoleInfo.Member)]
+    [Area(AreaInfo.Member)]
     public class ProfileController : BaseIdentityController
     {
         private readonly IMapper _mapper;
@@ -25,7 +26,7 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            TempData["Active"] = "profile";
+            TempData["Active"] = TempDataInfo.Profile;
             var appUser = await GetSignInUser();
 
 

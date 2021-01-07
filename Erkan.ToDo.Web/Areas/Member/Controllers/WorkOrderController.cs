@@ -4,6 +4,7 @@ using Erkan.ToDo.DTO.DTOs.ReportDtos;
 using Erkan.ToDo.DTO.DTOs.TaskDtos;
 using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.BaseControllers;
+using Erkan.ToDo.Web.StringInfo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,8 +13,8 @@ using System.Threading.Tasks;
 
 namespace Erkan.ToDo.Web.Areas.Member.Controllers
 {
-    [Authorize(Roles="Member")]
-    [Area("Member")]
+    [Authorize(Roles = RoleInfo.Member)]
+    [Area(AreaInfo.Member)]
     public class WorkOrderController : BaseIdentityController
     {
         private readonly ITaskService _taskService;
@@ -30,7 +31,7 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
 
         public async Task<IActionResult> Index()
         {
-            TempData["Active"] = "workOrder";
+            TempData["Active"] = TempDataInfo.WorkOrder;
 
             var user = await GetSignInUser();
 
@@ -39,7 +40,7 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
 
         public IActionResult AddReport(int id)
         {
-            TempData["Active"] = "workOrder";
+            TempData["Active"] = TempDataInfo.WorkOrder;
             var task = _taskService.GetImportanceById(id);
 
             ReportAddDto model = new ReportAddDto
@@ -84,7 +85,7 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
 
         public IActionResult UpdateReport(int id)
         {
-            TempData["Active"] = "workOrder";
+            TempData["Active"] = TempDataInfo.WorkOrder;
             var report = _reportService.GetByTaskId(id);
             ReportUpdateDto model = new ReportUpdateDto
             {

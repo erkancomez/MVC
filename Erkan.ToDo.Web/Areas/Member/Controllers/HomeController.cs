@@ -1,18 +1,16 @@
 ﻿using Erkan.ToDo.Business.Abstract;
 using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.BaseControllers;
+using Erkan.ToDo.Web.StringInfo;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Erkan.ToDo.Web.Areas.Member.Controllers
 {
-    [Authorize(Roles = "Member")]
-    [Area("Member")]
+    [Authorize(Roles = RoleInfo.Member)]
+    [Area(AreaInfo.Member)]
     public class HomeController : BaseIdentityController
     {
         private readonly IReportService _reportService;
@@ -37,7 +35,7 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
 
             ViewBag.UnreadNotification = _notificationService.GetUnreadCountByAppUserId(user.Id);
 
-            TempData["Active"] = "home";
+            TempData["Active"] = TempDataInfo.Homepage;
             return View();
         }
     }
