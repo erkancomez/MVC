@@ -1,6 +1,7 @@
 using AutoMapper;
 using Erkan.ToDo.Business.Abstract;
 using Erkan.ToDo.Business.Concrete;
+using Erkan.ToDo.Business.DiContainer;
 using Erkan.ToDo.Business.ValidationRules.FluentValidation;
 using Erkan.ToDo.DataAccess.Abstract;
 using Erkan.ToDo.DataAccess.Concrete.EntityFramework.Contexts;
@@ -10,6 +11,7 @@ using Erkan.ToDo.DTO.DTOs.ImportanceDtos;
 using Erkan.ToDo.DTO.DTOs.ReportDtos;
 using Erkan.ToDo.DTO.DTOs.TaskDtos;
 using Erkan.ToDo.Entities.Concrete;
+using Erkan.ToDo.Web.CustomCollectionsExtension;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -27,50 +29,11 @@ namespace Erkan.ToDo.Web
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ITaskService, TaskManager>();
-            services.AddScoped<IImportanceService, ImportanceManager>();
-            services.AddScoped<IReportService, ReportManager>();
-            services.AddScoped<IAppUserService, AppUserManager>();
-            services.AddScoped<IFileService, FileManager>();
-            services.AddScoped<INotificationService, NotificationManager>();
-
-            services.AddScoped<ITaskDal, EfTaskRepository>();
-            services.AddScoped<IReportDal, EfReportRepository>();
-            services.AddScoped<IImportanceDal, EfImportanceRepository>();
-            services.AddScoped<IAppUserDal, EfAppUserRepository>();
-            services.AddScoped<INotificationDal, EfNotificationRepository>();
-
+            services.AddContainerWithDependencies();
             services.AddDbContext<ToDoContext>();
-            services.AddIdentity<AppUser, AppRole>(opt =>
-            {
-                opt.Password.RequireDigit = false;
-                opt.Password.RequiredLength = 1;
-                opt.Password.RequireLowercase = false;
-                opt.Password.RequireNonAlphanumeric = false;
-                opt.Password.RequireUppercase = false;
-                
-
-            }).AddEntityFrameworkStores<ToDoContext>();
-
-            services.ConfigureApplicationCookie(opt =>
-            {
-                opt.Cookie.Name = "IsTakipCookie";
-                opt.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Strict;
-                opt.Cookie.HttpOnly = true;
-                opt.ExpireTimeSpan = TimeSpan.FromDays(20);
-                opt.LoginPath = "/Home/Index";
-            });
+            services.AddCustomIdentity();
             services.AddAutoMapper(typeof(Startup));
-
-            services.AddTransient<IValidator<ImportanceAddDto>, ImportanceAddValidator>();
-            services.AddTransient<IValidator<ImportanceUpdateDto>, ImportanceUpdateValidator>();
-            services.AddTransient<IValidator<AppUserAddDto>, AppUserAddValidator>();
-            services.AddTransient<IValidator<AppUserSignInDto>, AppUserSignInValidator>();
-            services.AddTransient<IValidator<TaskAddDto>, TaskAddValidator>();
-            services.AddTransient<IValidator<TaskUpdateDto>, TaskUpdateValidator>();
-            services.AddTransient<IValidator<ReportAddDto>, ReportAddValidator>();
-            services.AddTransient<IValidator<ReportUpdateDto>, ReportUpdateValidator>();
-
+            services.AddCustomValidator();
             services.AddControllersWithViews().AddFluentValidation();
         }
 
