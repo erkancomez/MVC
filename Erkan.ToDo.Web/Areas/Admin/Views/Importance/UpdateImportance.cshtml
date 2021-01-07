@@ -1,4 +1,4 @@
-﻿@model ImportanceUpdateViewModel
+﻿@model ImportanceUpdateDto
 @{
     ViewData["Title"] = "UpdateImportance";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -7,7 +7,7 @@
 <form asp-action="UpdateImportance" method="post" class="w-75 mx-auto p-3">
     <input type="hidden"  />
     <div class=" form-group">
-        <label asp-for="Definition"></label>
+        <label asp-for="Definition">Tanım: </label>
         <span asp-validation-for="Definition" class="text-danger"></span>
         <input asp-for="Definition" type="text" class="form-control" />
     </div>

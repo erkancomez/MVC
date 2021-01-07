@@ -1,12 +1,11 @@
-﻿using Erkan.ToDo.Business.Abstract;
+﻿using AutoMapper;
+using Erkan.ToDo.Business.Abstract;
+using Erkan.ToDo.DTO.DTOs.NotificationDtos;
 using Erkan.ToDo.Entities.Concrete;
-using Erkan.ToDo.Web.Areas.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Erkan.ToDo.Web.Areas.Admin.Controllers
@@ -17,33 +16,20 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
     {
         private readonly INotificationService _notificationService;
         private readonly UserManager<AppUser> _userManager;
-
-        public NotificationController(INotificationService notificationService, UserManager<AppUser> userManager)
+        private readonly IMapper _mapper;
+        public NotificationController(INotificationService notificationService, UserManager<AppUser> userManager, IMapper mapper)
         {
             _notificationService = notificationService;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
             TempData["Active"] = "notification";
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var notifications = _notificationService.GetUnread(user.Id);
 
-            List<NotificationListViewModel> models = new List<NotificationListViewModel>();
-            foreach (var item in notifications)
-            {
-                NotificationListViewModel model = new NotificationListViewModel
-                {
-                    Id = item.Id,
-                    Explanation = item.Explanation
-
-                };
-                models.Add(model);
-
-            }
-
-            return View(models);
+            return View(_mapper.Map<List<NotificationListDto>>(_notificationService.GetUnread(user.Id)));
         }
         [HttpPost]
         public IActionResult Index(int id)

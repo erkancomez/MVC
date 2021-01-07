@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Erkan.ToDo.DTO.DTOs.AppUserDtos
+﻿namespace Erkan.ToDo.DTO.DTOs.AppUserDtos
 {
     public class AppUserListDto
     {

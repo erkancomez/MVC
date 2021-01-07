@@ -1,12 +1,10 @@
-﻿using Erkan.ToDo.Business.Abstract;
+﻿using AutoMapper;
+using Erkan.ToDo.Business.Abstract;
+using Erkan.ToDo.DTO.DTOs.ImportanceDtos;
 using Erkan.ToDo.Entities.Concrete;
-using Erkan.ToDo.Web.Areas.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 {
@@ -15,38 +13,27 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
     public class ImportanceController : Controller
     {
         private readonly IImportanceService _importanceService;
+        private readonly IMapper _mapper;
 
-        public ImportanceController(IImportanceService importanceService)
+        public ImportanceController(IImportanceService importanceService, IMapper mapper)
         {
             _importanceService = importanceService;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
         {
             TempData["Active"] = "importance";
-            List<Importance> importances = _importanceService.GetAll();
 
-            List<ImportanceListViewModel> model = new List<ImportanceListViewModel>();
-
-            foreach (var item in importances)
-            {
-                ImportanceListViewModel importanceModel = new ImportanceListViewModel
-                {
-                    Id = item.Id,
-                    Definition = item.Definition
-                };
-
-                model.Add(importanceModel);
-            }
-            return View(model);
+            return View(_mapper.Map<List<ImportanceListDto>>(_importanceService.GetAll()));
         }
         public IActionResult AddImportance()
         {
             TempData["Active"] = "importance";
-            return View(new ImportanceAddViewModel());
+            return View(new ImportanceAddDto());
         }
         [HttpPost]
-        public IActionResult AddImportance(ImportanceAddViewModel model)
+        public IActionResult AddImportance(ImportanceAddDto model)
         {
             if (ModelState.IsValid)
             {
@@ -60,15 +47,11 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
         public IActionResult UpdateImportance(int id)
         {
             TempData["Active"] = "importance";
-            var importance = _importanceService.GetId(id);
-            ImportanceUpdateViewModel model = new ImportanceUpdateViewModel
-            { 
-                Id = importance.Id, Definition = importance.Definition 
-            };
-            return View(model);
+
+            return View(_mapper.Map<ImportanceUpdateDto>(_importanceService.GetId(id)));
         }
         [HttpPost]
-        public IActionResult UpdateImportance(ImportanceUpdateViewModel model)
+        public IActionResult UpdateImportance(ImportanceUpdateDto model)
         {
             if (ModelState.IsValid)
             {

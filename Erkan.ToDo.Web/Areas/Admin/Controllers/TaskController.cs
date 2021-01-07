@@ -1,4 +1,6 @@
-﻿using Erkan.ToDo.Business.Abstract;
+﻿using AutoMapper;
+using Erkan.ToDo.Business.Abstract;
+using Erkan.ToDo.DTO.DTOs.TaskDtos;
 using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.Areas.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -16,42 +18,29 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
     {
        private readonly ITaskService _taskService;
         private readonly IImportanceService _importanceService;
+        private readonly IMapper _mapper;
 
-        public TaskController(ITaskService taskService, IImportanceService importanceService)
+        public TaskController(ITaskService taskService, IImportanceService importanceService, IMapper mapper)
         {
             _taskService = taskService;
             _importanceService = importanceService;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
         {
             TempData["Active"] = "task";
-            List<Task> tasks = _taskService.GetByImportanceIncomplete();
-            List<TaskListViewModel> models = new List<TaskListViewModel>();
-            foreach (var item in tasks)
-            {
-                TaskListViewModel model = new TaskListViewModel
-                {
-                    CreatedDate = item.CreatedDate,
-                    Explanation = item.Explanation,
-                    Importance = item.Importance,
-                    Id = item.Id,
-                    ImportanceId = item.ImportanceId,
-                    Name = item.Name,
-                    Statement = item.Statement
-                };
-                models.Add(model);
-            }
-            return View(models);
+        
+            return View(_mapper.Map<List<TaskListDto>>(_taskService.GetByImportanceIncomplete()));
         }
         public IActionResult AddTask()
         {
             TempData["Active"] = "task";
             ViewBag.Importances =new SelectList( _importanceService.GetAll(), "Id", "Definition");
-            return View(new TaskAddViewModel());
+            return View(new TaskAddDto());
         }
         [HttpPost]
-        public IActionResult AddTask(TaskAddViewModel model)
+        public IActionResult AddTask(TaskAddDto model)
         {
             if (ModelState.IsValid)
             {
@@ -63,24 +52,20 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
                 });
                 return RedirectToAction("Index");
             }
+            ViewBag.Importances = new SelectList(_importanceService.GetAll(), "Id", "Definition");
             return View(model);
         }
         public IActionResult UpdateTask(int id)
         {
             TempData["Active"] = "task";
-            var task = _taskService.GetId(id);
-            TaskUpdateViewModel model = new TaskUpdateViewModel
-            {
-                Id = task.Id,
-                Explanation = task.Explanation,
-                ImportanceId = task.ImportanceId,
-                Name = task.Name
-            };
-            ViewBag.Importances = new SelectList(_importanceService.GetAll(), "Id", "Definition",task.ImportanceId);
-            return View(model);
+           var gorev =  _taskService.GetId(id);
+
+
+            ViewBag.Importances = new SelectList(_importanceService.GetAll(), "Id", "Definition", gorev.ImportanceId);
+            return View(_mapper.Map<TaskUpdateDto>(gorev));
         }
         [HttpPost]
-        public IActionResult UpdateTask(TaskUpdateViewModel model)
+        public IActionResult UpdateTask(TaskUpdateDto model)
         {
             if (ModelState.IsValid)
             {
@@ -90,10 +75,11 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
                     Explanation = model.Explanation,
                     ImportanceId = model.ImportanceId,
                     Name = model.Name
-
                 });
+
                 return RedirectToAction("Index");
             }
+            ViewBag.Importances = new SelectList(_importanceService.GetAll(), "Id", "Definition", model.ImportanceId);
             return View(model);
         }
         public IActionResult DeleteTask(int id)

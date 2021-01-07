@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Erkan.ToDo.Entities.Concrete;
 
 namespace Erkan.ToDo.DTO.DTOs.TaskDtos
 {

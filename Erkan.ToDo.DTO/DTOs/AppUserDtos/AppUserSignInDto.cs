@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Erkan.ToDo.DTO.DTOs.AppUserDtos
+﻿namespace Erkan.ToDo.DTO.DTOs.AppUserDtos
 {
-    public class SignInDto
+    public class AppUserSignInDto
     {
         public string UserName { get; set; }
         public string Password { get; set; }

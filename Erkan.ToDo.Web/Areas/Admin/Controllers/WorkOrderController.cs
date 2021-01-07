@@ -1,4 +1,7 @@
-﻿using Erkan.ToDo.Business.Abstract;
+﻿using AutoMapper;
+using Erkan.ToDo.Business.Abstract;
+using Erkan.ToDo.DTO.DTOs.AppUserDtos;
+using Erkan.ToDo.DTO.DTOs.TaskDtos;
 using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.Areas.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -20,58 +23,31 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IFileService _fileService;
         private readonly INotificationService _notificationService;
+        private readonly IMapper _mapper;
 
-        public WorkOrderController(IAppUserService appUserService, ITaskService taskService, UserManager<AppUser> userManager, IFileService fileService, INotificationService notificationService)
+        public WorkOrderController(IAppUserService appUserService, ITaskService taskService, UserManager<AppUser> userManager, IFileService fileService, INotificationService notificationService, IMapper mapper)
         {
             _appUserService = appUserService;
             _taskService = taskService;
             _userManager = userManager;
             _fileService = fileService;
             _notificationService = notificationService;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
         {
             TempData["Active"] = "workorder";
-            //var model = _appUserService.GetNonAdmin();
 
-            List<Task> tasks = _taskService.GetAllTable();
-            List<TaskListAllViewModel> models = new List<TaskListAllViewModel>();
-
-            foreach (var item in tasks)
-            {
-                TaskListAllViewModel model = new TaskListAllViewModel
-                {
-                    Id = item.Id,
-                    Explanation = item.Explanation,
-                    Importance = item.Importance,
-                    Name = item.Name,
-                    AppUser = item.AppUser,
-                    CreatedDate = item.CreatedDate,
-                    Reports = item.Reports
-                };
-                models.Add(model);
-
-
-            }
-            return View(models);
+            return View(_mapper.Map<List<TaskListAllDto>>(_taskService.GetAllTable()));
         }
 
         public IActionResult Detail(int id)
         {
             TempData["Active"] = "workorder";
-            var task = _taskService.GetByTaskId(id);
-            TaskListAllViewModel model = new TaskListAllViewModel
-            {
-                Id = task.Id,
-                Importance = task.Importance,
-                Reports = task.Reports,
-                Name = task.Name,
-                Explanation = task.Explanation,
-                AppUser = task.AppUser
-            };
+            
 
-            return View(model);
+            return View(_mapper.Map<TaskListAllDto>(_taskService.GetByTaskId(id)));
 
         }
 
@@ -95,38 +71,15 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 
             ViewBag.Search = s;
 
-            var task = _taskService.GetImportanceById(id);
-            var staffs = _appUserService.GetNonAdmin(out int totalPage, s, page);
-
+            var staffs = _mapper.Map<List<AppUserListDto>>(_appUserService.GetNonAdmin(out int totalPage, s, page));
             ViewBag.TotalPage = totalPage;
 
-            List<AppUserListViewModel> appUserListModel = new List<AppUserListViewModel>();
-            foreach (var item in staffs)
-            {
-                AppUserListViewModel model = new AppUserListViewModel
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    SurName = item.SurName,
-                    Email = item.Email,
-                    Picture = item.Picture
-                };
-                appUserListModel.Add(model);
-            }
-            ViewBag.Staffs = appUserListModel;
+            ViewBag.Staffs = staffs;
 
-            TaskListViewModel taskModel = new TaskListViewModel
-            {
-                Id = task.Id,
-                Name = task.Name,
-                Explanation = task.Explanation,
-                Importance = task.Importance,
-                CreatedDate = task.CreatedDate
-            };
-            return View(taskModel);
+            return View(_mapper.Map<TaskListDto>(_taskService.GetImportanceById(id)));
         }
         [HttpPost]
-        public IActionResult AssignStaff(StaffTaskViewModel model)
+        public IActionResult AssignStaff(StaffTaskDto model)
         {
             var updateTask = _taskService.GetId(model.TaskId);
             updateTask.AppUserId = model.StaffId;
@@ -141,33 +94,14 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult TaskStaff(StaffTaskViewModel model)
+        public IActionResult TaskStaff(StaffTaskDto model)
         {
             TempData["Active"] = "notification";
-            var user = _userManager.Users.FirstOrDefault(I => I.Id == model.StaffId);
-            var task = _taskService.GetImportanceById(model.TaskId);
 
-            AppUserListViewModel userModel = new AppUserListViewModel
+            StaffTaskListDto staffTaskModel = new StaffTaskListDto
             {
-                Id = user.Id,
-                Name = user.Name,
-                Picture = user.Picture,
-                SurName = user.SurName
-            };
-            userModel.Email = userModel.Email;
-
-            TaskListViewModel taskModel = new TaskListViewModel
-            {
-                Id = task.Id,
-                Explanation = task.Explanation,
-                Importance = task.Importance,
-                Name = task.Name
-            };
-
-            StaffTaskListViewModel staffTaskModel = new StaffTaskListViewModel
-            {
-                AppUser = userModel,
-                Task = taskModel
+                AppUser = _mapper.Map<AppUserListDto>(_userManager.Users.FirstOrDefault(I => I.Id == model.StaffId)),
+                Task = _mapper.Map<TaskListDto>(_taskService.GetImportanceById(model.TaskId))
             };
 
             return View(staffTaskModel);

@@ -1,4 +1,5 @@
 ﻿using Erkan.ToDo.Business.Abstract;
+using Erkan.ToDo.DTO.DTOs.AppUserDtos;
 using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.Models;
 using Microsoft.AspNetCore.Identity;
@@ -27,7 +28,7 @@ namespace Erkan.ToDo.Web.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> SignIn(AppUserSignInModel model)
+        public async Task<IActionResult> SignIn(AppUserSignInDto model)
         {
             if (ModelState.IsValid)
             {
@@ -58,7 +59,7 @@ namespace Erkan.ToDo.Web.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> SignUp(AppUserAddViewModel model)
+        public async Task<IActionResult> SignUp(AppUserAddDto model)
         {
             if (ModelState.IsValid)
             {

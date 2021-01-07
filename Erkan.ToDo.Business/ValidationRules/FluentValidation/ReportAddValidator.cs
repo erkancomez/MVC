@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Erkan.ToDo.Business.ValidationRules.FluentValidation
 {
-    class ReportAddValidator:AbstractValidator<ReportAddDto>
+    public class ReportAddValidator:AbstractValidator<ReportAddDto>
     {
         public ReportAddValidator()
         {

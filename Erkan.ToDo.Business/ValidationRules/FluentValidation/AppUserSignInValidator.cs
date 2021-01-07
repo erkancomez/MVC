@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Erkan.ToDo.Business.ValidationRules.FluentValidation
 {
-    public class AppUserSignInValidator: AbstractValidator<AppUserAddDto>
+    public class AppUserSignInValidator: AbstractValidator<AppUserSignInDto>
     {
         public AppUserSignInValidator()
         {

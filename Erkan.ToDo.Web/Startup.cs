@@ -1,9 +1,17 @@
+using AutoMapper;
 using Erkan.ToDo.Business.Abstract;
 using Erkan.ToDo.Business.Concrete;
+using Erkan.ToDo.Business.ValidationRules.FluentValidation;
 using Erkan.ToDo.DataAccess.Abstract;
 using Erkan.ToDo.DataAccess.Concrete.EntityFramework.Contexts;
 using Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories;
+using Erkan.ToDo.DTO.DTOs.AppUserDtos;
+using Erkan.ToDo.DTO.DTOs.ImportanceDtos;
+using Erkan.ToDo.DTO.DTOs.ReportDtos;
+using Erkan.ToDo.DTO.DTOs.TaskDtos;
 using Erkan.ToDo.Entities.Concrete;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -52,8 +60,18 @@ namespace Erkan.ToDo.Web
                 opt.ExpireTimeSpan = TimeSpan.FromDays(20);
                 opt.LoginPath = "/Home/Index";
             });
+            services.AddAutoMapper(typeof(Startup));
 
-            services.AddControllersWithViews();
+            services.AddTransient<IValidator<ImportanceAddDto>, ImportanceAddValidator>();
+            services.AddTransient<IValidator<ImportanceUpdateDto>, ImportanceUpdateValidator>();
+            services.AddTransient<IValidator<AppUserAddDto>, AppUserAddValidator>();
+            services.AddTransient<IValidator<AppUserSignInDto>, AppUserSignInValidator>();
+            services.AddTransient<IValidator<TaskAddDto>, TaskAddValidator>();
+            services.AddTransient<IValidator<TaskUpdateDto>, TaskUpdateValidator>();
+            services.AddTransient<IValidator<ReportAddDto>, ReportAddValidator>();
+            services.AddTransient<IValidator<ReportUpdateDto>, ReportUpdateValidator>();
+
+            services.AddControllersWithViews().AddFluentValidation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

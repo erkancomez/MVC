@@ -1,4 +1,4 @@
-﻿@model TaskListViewModel
+﻿@model TaskListDto
 @{
     ViewData["Title"] = "AssignStaff";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -47,7 +47,7 @@
 
 
 
-        @foreach (var item in (List<AppUserListViewModel>)ViewBag.Staffs)
+        @foreach (var item in (List<AppUserListDto>)ViewBag.Staffs)
         {
             <div class="card p-2 mb-3">
                 <div class="row no-gutters">

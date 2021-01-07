@@ -11,7 +11,7 @@ namespace Erkan.ToDo.Business.ValidationRules.FluentValidation
         public TaskUpdateValidator()
         {
             RuleFor(I => I.Name).NotNull().WithMessage("Ad alanı boş geçilemez.");
-            RuleFor(I => I.ImportanceId).ExclusiveBetween(1, int.MaxValue).WithMessage("Lütfen bir aciliyet durumu seçiniz.");
+            RuleFor(I => I.ImportanceId).ExclusiveBetween(0, int.MaxValue).WithMessage("Lütfen bir aciliyet durumu seçiniz.");
         }
     }
 }
