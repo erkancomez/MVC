@@ -1,25 +1,18 @@
-﻿using Erkan.ToDo.Business.Abstract;
-using Erkan.ToDo.DTO.DTOs.AppUserDtos;
+﻿using Erkan.ToDo.DTO.DTOs.AppUserDtos;
 using Erkan.ToDo.Entities.Concrete;
-using Erkan.ToDo.Web.Models;
+using Erkan.ToDo.Web.BaseControllers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Erkan.ToDo.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseIdentityController
     {
-        //private readonly ITaskService _taskService;
-        private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
 
-        public HomeController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        public HomeController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager):base(userManager)
         {
-            _userManager = userManager;
             _signInManager = signInManager;
         }
 
@@ -32,7 +25,7 @@ namespace Erkan.ToDo.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByNameAsync(model.UserName);
+                var user = await GetSignInUser();
                 if (user!=null)
                 {
                     var identityResult = await _signInManager.PasswordSignInAsync(model.UserName,model.Password, model.RememberMe, false);
@@ -80,16 +73,9 @@ namespace Erkan.ToDo.Web.Controllers
                     {
                         return RedirectToAction("Index");
                     }
-                    foreach (var item in addRoleResult.Errors)
-                    {
-                        ModelState.AddModelError("", item.Description);
-                    }
-
+                    ErrorAdd(addRoleResult.Errors);
                 }
-                foreach (var item in result.Errors)
-                {
-                    ModelState.AddModelError("", item.Description);
-                }
+                ErrorAdd(result.Errors);
             }
 
             return View(model);

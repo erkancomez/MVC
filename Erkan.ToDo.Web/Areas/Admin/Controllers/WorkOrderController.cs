@@ -3,7 +3,7 @@ using Erkan.ToDo.Business.Abstract;
 using Erkan.ToDo.DTO.DTOs.AppUserDtos;
 using Erkan.ToDo.DTO.DTOs.TaskDtos;
 using Erkan.ToDo.Entities.Concrete;
-using Erkan.ToDo.Web.Areas.Admin.Models;
+using Erkan.ToDo.Web.BaseControllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,20 +16,19 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
-    public class WorkOrderController : Controller
+    public class WorkOrderController : BaseIdentityController
     {
         private readonly IAppUserService _appUserService;
         private readonly ITaskService _taskService;
-        private readonly UserManager<AppUser> _userManager;
+
         private readonly IFileService _fileService;
         private readonly INotificationService _notificationService;
         private readonly IMapper _mapper;
 
-        public WorkOrderController(IAppUserService appUserService, ITaskService taskService, UserManager<AppUser> userManager, IFileService fileService, INotificationService notificationService, IMapper mapper)
+        public WorkOrderController(IAppUserService appUserService, ITaskService taskService, UserManager<AppUser> userManager, IFileService fileService, INotificationService notificationService, IMapper mapper) : base(userManager)
         {
             _appUserService = appUserService;
             _taskService = taskService;
-            _userManager = userManager;
             _fileService = fileService;
             _notificationService = notificationService;
             _mapper = mapper;

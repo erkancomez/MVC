@@ -1,6 +1,8 @@
-﻿using Erkan.ToDo.Business.Abstract;
+﻿using AutoMapper;
+using Erkan.ToDo.Business.Abstract;
+using Erkan.ToDo.DTO.DTOs.TaskDtos;
 using Erkan.ToDo.Entities.Concrete;
-using Erkan.ToDo.Web.Areas.Admin.Models;
+using Erkan.ToDo.Web.BaseControllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,44 +15,28 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
 {
     [Authorize(Roles = "Member")]
     [Area("Member")]
-    public class TaskController : Controller
+    public class TaskController : BaseIdentityController
     {
         private readonly ITaskService _taskService;
-        private readonly UserManager<AppUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public TaskController(ITaskService taskService, UserManager<AppUser> userManager)
+
+        public TaskController(ITaskService taskService, UserManager<AppUser> userManager, IMapper mapper):base(userManager)
         {
             _taskService = taskService;
-            _userManager = userManager;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index(int activePage=1)
         {
             TempData["Active"] = "task";
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var tasks = _taskService.GetAllTableInCompleted(out int totalPage, user.Id, activePage);
+            var user = await GetSignInUser();
+            var tasks =_mapper.Map<List<TaskListAllDto>>(_taskService.GetAllTableInCompleted(out int totalPage, user.Id, activePage));
 
             ViewBag.TotalPage = totalPage;
             ViewBag.ActivePage = activePage;
 
-            List<TaskListAllViewModel> models = new List<TaskListAllViewModel>();
-            foreach (var task in tasks)
-            {
-                TaskListAllViewModel model = new TaskListAllViewModel {
-                    Id = task.Id,
-                    Explanation = task.Explanation,
-                    Importance = task.Importance,
-                    AppUser = task.AppUser,
-                    CreatedDate = task.CreatedDate,
-                    Name = task.Name,
-                    Reports = task.Reports
-                };
-
-                models.Add(model);
-
-            }
-
-            return View(models);
+            return View(tasks);
         }
     }
 }

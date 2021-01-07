@@ -1,6 +1,7 @@
-﻿using Erkan.ToDo.Business.Abstract;
+﻿using AutoMapper;
+using Erkan.ToDo.Business.Abstract;
+using Erkan.ToDo.DTO.DTOs.AppUserDtos;
 using Erkan.ToDo.Entities.Concrete;
-using Erkan.ToDo.Web.Areas.Admin.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,35 +15,29 @@ namespace Erkan.ToDo.Web.ViewComponents
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly INotificationService _notificationService;
-        public Wrapper(UserManager<AppUser> userManager, INotificationService notificationService)
+        private readonly IMapper _mapper;
+        public Wrapper(UserManager<AppUser> userManager, INotificationService notificationService, IMapper mapper)
         {
             _userManager = userManager;
             _notificationService = notificationService;
+            _mapper = mapper;
         }
 
         public IViewComponentResult Invoke()
         {
+            var identityUser = _userManager.FindByNameAsync(User.Identity.Name).Result;
+            var model = _mapper.Map<AppUserListDto>(identityUser);
 
-            var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
-            AppUserListViewModel model = new AppUserListViewModel
-            {
-                Id = user.Id,
-                Name = user.Name,
-                SurName = user.SurName,
-                Picture = user.Picture,
-                Email = user.Email
-            };
-
-            var notification = _notificationService.GetUnread(user.Id).Count;
+            var notification = _notificationService.GetUnread(model.Id).Count;
             ViewBag.NotificationCount = notification;
 
-            var roles = _userManager.GetRolesAsync(user).Result;
+            var roles = _userManager.GetRolesAsync(identityUser).Result;
             if (roles.Contains("Admin"))
             {
                 return View(model);
             }
 
-            return View("Member",model);
+            return View("Member", model);
         }
     }
 }

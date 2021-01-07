@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Erkan.ToDo.Entities.Concrete;
 
 namespace Erkan.ToDo.DTO.DTOs.ReportDtos
 {
@@ -9,7 +7,7 @@ namespace Erkan.ToDo.DTO.DTOs.ReportDtos
         public int Id { get; set; }
         public string Detail { get; set; }
         public string Describtion { get; set; }
-        //public Task Task { get; set; }
+        public Task Task { get; set; }
         public int TaskId { get; set; }
     }
 }

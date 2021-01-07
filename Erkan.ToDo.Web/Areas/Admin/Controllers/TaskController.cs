@@ -2,7 +2,6 @@
 using Erkan.ToDo.Business.Abstract;
 using Erkan.ToDo.DTO.DTOs.TaskDtos;
 using Erkan.ToDo.Entities.Concrete;
-using Erkan.ToDo.Web.Areas.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

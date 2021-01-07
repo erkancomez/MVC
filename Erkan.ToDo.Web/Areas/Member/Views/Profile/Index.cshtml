@@ -1,4 +1,4 @@
-﻿@model AppUserListViewModel
+﻿@model AppUserListDto
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Member/Views/Shared/_MemberLayout.cshtml";
@@ -18,17 +18,17 @@
 <form asp-action="Index" method="post" class="w-75 mx-auto p-3" enctype="multipart/form-data">
     <input type="hidden" asp-for="@Model.Id" />
     <div class="form-group">
-        <label asp-for="Name"></label>
+        <label asp-for="Name">Ad: </label>
         <span asp-validation-for="Name" class="text-danger"></span>
         <input asp-for="Name" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="SurName"></label>
+        <label asp-for="SurName">Soyad: </label>
         <span asp-validation-for="SurName" class="text-danger"></span>
         <input asp-for="SurName" class="form-control" />
     </div>
     <div class="form-group">
-        <label asp-for="Email"></label>
+        <label asp-for="Email">Email: </label>
         <span asp-validation-for="Email" class="text-danger"></span>
         <input asp-for="Email" class="form-control" />
     </div>

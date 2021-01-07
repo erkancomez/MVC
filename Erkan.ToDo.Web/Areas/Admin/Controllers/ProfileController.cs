@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Erkan.ToDo.DTO.DTOs.AppUserDtos;
 using Erkan.ToDo.Entities.Concrete;
-using Erkan.ToDo.Web.Areas.Admin.Models;
+using Erkan.ToDo.Web.BaseControllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -16,21 +16,19 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
-    public class ProfileController : Controller
+    public class ProfileController : BaseIdentityController
     {
-        private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
 
-        public ProfileController(UserManager<AppUser> userManager, IMapper mapper)
+        public ProfileController(UserManager<AppUser> userManager, IMapper mapper):base(userManager)
         {
-            _userManager = userManager;
             _mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
             TempData["Active"] = "profile";
 
-            return View(_mapper.Map<AppUserListDto>(await _userManager.FindByNameAsync(User.Identity.Name)));
+            return View(_mapper.Map<AppUserListDto>(await GetSignInUser()));
         }
 
         [HttpPost]
@@ -63,10 +61,7 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
                 }
                 else
                 {
-                    foreach (var item in result.Errors)
-                    {
-                        ModelState.AddModelError("", item.Description);
-                    }
+                    ErrorAdd(result.Errors);
                 }
             }
             return View(model);

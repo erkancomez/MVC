@@ -1,60 +1,40 @@
-﻿using Erkan.ToDo.Business.Abstract;
+﻿using AutoMapper;
+using Erkan.ToDo.Business.Abstract;
+using Erkan.ToDo.DTO.DTOs.ReportDtos;
+using Erkan.ToDo.DTO.DTOs.TaskDtos;
 using Erkan.ToDo.Entities.Concrete;
-using Erkan.ToDo.Web.Areas.Admin.Models;
+using Erkan.ToDo.Web.BaseControllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Erkan.ToDo.Web.Areas.Member.Controllers
 {
     [Authorize(Roles="Member")]
     [Area("Member")]
-    public class WorkOrderController : Controller
+    public class WorkOrderController : BaseIdentityController
     {
         private readonly ITaskService _taskService;
-        private readonly UserManager<AppUser> _userManager;
         private readonly IReportService _reportService;
         private readonly INotificationService _notificationService;
-
-        public WorkOrderController(ITaskService taskService, UserManager<AppUser> userManager, IReportService reportService, INotificationService notificationService)
+        private readonly IMapper _mapper;
+        public WorkOrderController(ITaskService taskService, UserManager<AppUser> userManager, IReportService reportService, INotificationService notificationService, IMapper mapper):base(userManager)
         {
             _taskService = taskService;
-            _userManager = userManager;
             _reportService = reportService;
             _notificationService = notificationService;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
             TempData["Active"] = "workOrder";
 
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var user = await GetSignInUser();
 
-            var tasks = _taskService.GetAllTable(I => I.AppUserId == user.Id && !I.Statement);
-
-            List<TaskListAllViewModel> models = new List<TaskListAllViewModel>();
-
-            foreach (var item in tasks)
-            {
-                TaskListAllViewModel model = new TaskListAllViewModel
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    Importance = item.Importance,
-                    Explanation = item.Explanation,
-                    CreatedDate = item.CreatedDate,
-                    AppUser = item.AppUser,
-                    Reports = item.Reports
-                };
-
-                models.Add(model);
-            }
-
-            return View(models);
+            return View(_mapper.Map<List<TaskListAllDto>>(_taskService.GetAllTable(I => I.AppUserId == user.Id && !I.Statement)));
         }
 
         public IActionResult AddReport(int id)
@@ -62,7 +42,7 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
             TempData["Active"] = "workOrder";
             var task = _taskService.GetImportanceById(id);
 
-            ReportAddViewModel model = new ReportAddViewModel
+            ReportAddDto model = new ReportAddDto
             {
                 TaskId = id,
                 Task = task
@@ -71,7 +51,7 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddReportAsync(ReportAddViewModel model)
+        public async Task<IActionResult> AddReportAsync(ReportAddDto model)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +65,7 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
 
                 var adminUserList = await _userManager.GetUsersInRoleAsync("Admin");
 
-                var activeUser = await _userManager.FindByNameAsync(User.Identity.Name);
+                var activeUser = await GetSignInUser();
 
                 foreach (var admin in adminUserList)
                 {
@@ -106,7 +86,7 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
         {
             TempData["Active"] = "workOrder";
             var report = _reportService.GetByTaskId(id);
-            ReportUpdateViewModel model = new ReportUpdateViewModel
+            ReportUpdateDto model = new ReportUpdateDto
             {
                 Id = report.Id,
                 TaskId = report.TaskId,
@@ -120,7 +100,7 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateReport(ReportUpdateViewModel model)
+        public IActionResult UpdateReport(ReportUpdateDto model)
         {
             if (ModelState.IsValid)
             {
@@ -144,7 +124,7 @@ namespace Erkan.ToDo.Web.Areas.Member.Controllers
 
             var adminUserList = await _userManager.GetUsersInRoleAsync("Admin");
 
-            var activeUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            var activeUser = await GetSignInUser();
 
             foreach (var admin in adminUserList)
             {
