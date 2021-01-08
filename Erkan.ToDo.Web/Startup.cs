@@ -1,25 +1,14 @@
 using AutoMapper;
-using Erkan.ToDo.Business.Abstract;
-using Erkan.ToDo.Business.Concrete;
 using Erkan.ToDo.Business.DiContainer;
-using Erkan.ToDo.Business.ValidationRules.FluentValidation;
-using Erkan.ToDo.DataAccess.Abstract;
 using Erkan.ToDo.DataAccess.Concrete.EntityFramework.Contexts;
-using Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories;
-using Erkan.ToDo.DTO.DTOs.AppUserDtos;
-using Erkan.ToDo.DTO.DTOs.ImportanceDtos;
-using Erkan.ToDo.DTO.DTOs.ReportDtos;
-using Erkan.ToDo.DTO.DTOs.TaskDtos;
 using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.CustomCollectionsExtension;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 
 namespace Erkan.ToDo.Web
 {
@@ -44,7 +33,12 @@ namespace Erkan.ToDo.Web
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
 
+            app.UseStatusCodePagesWithReExecute("/Home/StatusCode", "?code={0}");
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

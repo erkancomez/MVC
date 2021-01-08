@@ -5,15 +5,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="C:\Users\erkan\.nuget\packages\nlog.config\4.7.6\contentFiles\any\any\NLog.config" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EPPlus" Version="5.5.0" />
     <PackageReference Include="FastMember" Version="1.5.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="9.3.0" />
     <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.7.0" />
+    <PackageReference Include="NLog" Version="4.7.6" />
+    <PackageReference Include="NLog.Schema" Version="4.7.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Erkan.ToDo.DataAccess\Erkan.ToDo.DataAccess.csproj" />
     <ProjectReference Include="..\Erkan.ToDo.DTO\Erkan.ToDo.DTO.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

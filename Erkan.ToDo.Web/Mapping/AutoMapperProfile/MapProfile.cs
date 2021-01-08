@@ -52,6 +52,8 @@ namespace Erkan.ToDo.Web.Mapping.AutoMapperProfile
             CreateMap<Report, ReportAddDto>();
             CreateMap<ReportUpdateDto, Report>();
             CreateMap<Report, ReportUpdateDto>(); 
+            CreateMap<ReportFileDto, Report>();
+            CreateMap<Report, ReportFileDto>();
             #endregion
         }
     }

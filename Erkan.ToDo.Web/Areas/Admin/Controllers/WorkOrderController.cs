@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Erkan.ToDo.Business.Abstract;
 using Erkan.ToDo.DTO.DTOs.AppUserDtos;
+using Erkan.ToDo.DTO.DTOs.ReportDtos;
 using Erkan.ToDo.DTO.DTOs.TaskDtos;
 using Erkan.ToDo.Entities.Concrete;
 using Erkan.ToDo.Web.BaseControllers;
@@ -53,12 +54,12 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
 
         public IActionResult GetExcel(int id)
         {
-            return File(_fileService.TransferExcel(_taskService.GetByTaskId(id).Reports), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", Guid.NewGuid() + ".xlsx");
+            return File(_fileService.TransferExcel(_mapper.Map<List<ReportFileDto>>(_taskService.GetByTaskId(id).Reports)), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", Guid.NewGuid() + ".xlsx");
         }
 
         public IActionResult GetPdf(int id)
         {
-            var path = _fileService.TranferPdf(_taskService.GetByTaskId(id).Reports);
+            var path = _fileService.TranferPdf(_mapper.Map<List<ReportFileDto>>(_taskService.GetByTaskId(id).Reports));
 
             return File(path, "aplication/pdf", Guid.NewGuid() + ".pdf");
         }

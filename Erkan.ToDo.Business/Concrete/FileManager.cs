@@ -24,6 +24,12 @@ namespace Erkan.ToDo.Business.Concrete
 
             var stream = new FileStream(path, FileMode.Create);
 
+            string arialTtf = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "arial.ttf");
+
+            BaseFont baseFont = BaseFont.CreateFont(arialTtf, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+
+            Font font = new Font(baseFont, 12, Font.NORMAL);
+
             Document document = new Document(PageSize.A4,25f,25f,25f,25f);
             PdfWriter.GetInstance(document, stream);
 
@@ -32,14 +38,14 @@ namespace Erkan.ToDo.Business.Concrete
             PdfPTable pdfPTable = new PdfPTable(dataTable.Columns.Count);
             for (int i = 0; i < dataTable.Columns.Count; i++)
             {
-                pdfPTable.AddCell(dataTable.Columns[i].ColumnName);
+                pdfPTable.AddCell(new Phrase(dataTable.Columns[i].ColumnName,font));
             }
 
             for (int i = 0; i < dataTable.Rows.Count; i++)
             {
                 for (int j = 0; j < dataTable.Columns.Count; j++)
                 {
-                    pdfPTable.AddCell(dataTable.Rows[i][j].ToString());
+                    pdfPTable.AddCell(new Phrase(dataTable.Rows[i][j].ToString(),font));
                 }
             }
             document.Add(pdfPTable);
@@ -51,6 +57,7 @@ namespace Erkan.ToDo.Business.Concrete
 
         public byte[] TransferExcel<T>(List<T> list) where T : class, new()
         {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             var excelPackage = new ExcelPackage();
             var excelBlank = excelPackage.Workbook.Worksheets.Add("sayfa1");
 

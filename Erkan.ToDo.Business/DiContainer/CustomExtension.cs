@@ -1,5 +1,6 @@
 ﻿using Erkan.ToDo.Business.Abstract;
 using Erkan.ToDo.Business.Concrete;
+using Erkan.ToDo.Business.CustomLogger;
 using Erkan.ToDo.DataAccess.Abstract;
 using Erkan.ToDo.DataAccess.Concrete.EntityFramework.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,6 +26,8 @@ namespace Erkan.ToDo.Business.DiContainer
             services.AddScoped<IImportanceDal, EfImportanceRepository>();
             services.AddScoped<IAppUserDal, EfAppUserRepository>();
             services.AddScoped<INotificationDal, EfNotificationRepository>();
+
+            services.AddTransient<ICustomLogger, NLogLogger>();
         }
     }
 }
