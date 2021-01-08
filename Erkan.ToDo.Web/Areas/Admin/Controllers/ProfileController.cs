@@ -48,8 +48,10 @@ namespace Erkan.ToDo.Web.Areas.Admin.Controllers
                     }
 
                     updateUser.Picture = pictureName;
-
                 }
+                updateUser.Email = model.Email;
+                updateUser.Name = model.Name;
+                updateUser.SurName = model.SurName;
 
                 _mapper.Map<AppUserListDto>(updateUser);
 
