@@ -13,30 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Erkan.ToDo.Web", "Erkan.ToD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Erkan.ToDo.DTO", "Erkan.ToDo.DTO\Erkan.ToDo.DTO.csproj", "{8985F0A9-9B7B-4034-9763-114D1B5D457D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Readme_Img", "Readme_Img", "{858B3941-C909-4895-BC51-C4A244AD3232}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "member", "member", "{3B3A6815-C781-47E9-A724-050413088DE9}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\Desktop\member\Screenshot_2.png = ..\..\..\Desktop\member\Screenshot_2.png
-		..\..\..\Desktop\member\Screenshot_3.png = ..\..\..\Desktop\member\Screenshot_3.png
-		..\..\..\Desktop\member\Screenshot_4.png = ..\..\..\Desktop\member\Screenshot_4.png
-		..\..\..\Desktop\member\Screenshot_5.png = ..\..\..\Desktop\member\Screenshot_5.png
-		..\..\..\Desktop\member\Screenshot_6.png = ..\..\..\Desktop\member\Screenshot_6.png
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "admin", "admin", "{25197A37-92A4-47A2-B177-4619B7C1C99F}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\Desktop\admin\anasayfa.png = ..\..\..\Desktop\admin\anasayfa.png
-		..\..\..\Desktop\admin\Screenshot_2.png = ..\..\..\Desktop\admin\Screenshot_2.png
-		..\..\..\Desktop\admin\Screenshot_3.png = ..\..\..\Desktop\admin\Screenshot_3.png
-		..\..\..\Desktop\admin\Screenshot_4.png = ..\..\..\Desktop\admin\Screenshot_4.png
-		..\..\..\Desktop\admin\Screenshot_5.png = ..\..\..\Desktop\admin\Screenshot_5.png
-		..\..\..\Desktop\admin\Screenshot_6.png = ..\..\..\Desktop\admin\Screenshot_6.png
-		..\..\..\Desktop\admin\Screenshot_7.png = ..\..\..\Desktop\admin\Screenshot_7.png
-		..\..\..\Desktop\admin\Screenshot_8.png = ..\..\..\Desktop\admin\Screenshot_8.png
-		..\..\..\Desktop\admin\Screenshot_9.png = ..\..\..\Desktop\admin\Screenshot_9.png
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,10 +42,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{3B3A6815-C781-47E9-A724-050413088DE9} = {858B3941-C909-4895-BC51-C4A244AD3232}
-		{25197A37-92A4-47A2-B177-4619B7C1C99F} = {858B3941-C909-4895-BC51-C4A244AD3232}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {11F35614-651C-4596-97E2-99229CAE36CC}
